@@ -1,0 +1,2594 @@
+<!DOCTYPE html>
+<!--
+=============================================================
+  GKVM Academic Calendar System – 2026-27
+  शासकीय ज्ञान विज्ञान महाविद्यालय, छत्रपती संभाजीनगर
+
+  © Copyright 2026 – Jyoti B. Thorat & Bapu R. Thorat
+  All Rights Reserved. सर्व हक्क राखीव.
+
+  This software, its source code, design, data structures,
+  and user interface are the exclusive intellectual property
+  of Jyoti B. Thorat and Bapu R. Thorat.
+
+  Protected under:
+    - The Copyright Act, 1957 (India)
+    - The Information Technology Act, 2000
+    - Indian Penal Code §§ 63, 63B
+
+  Unauthorized reproduction, modification, distribution,
+  or commercial use — in whole or in part — without prior
+  written consent of the copyright holders is strictly
+  prohibited and shall attract civil and criminal liability.
+
+  Legal Contact:
+  Jyoti B. Thorat & Bapu R. Thorat
+  Chhatrapati Sambhajinagar, Maharashtra, India
+=============================================================
+-->
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Jyoti B. Thorat, Bapu R. Thorat">
+<meta name="copyright" content="© 2026 Jyoti B. Thorat & Bapu R. Thorat. All Rights Reserved.">
+<meta name="description" content="GKVM Academic Calendar 2026-27 – Shaskiya Dnyan Vigyan Mahavidyalaya, Chhatrapati Sambhajinagar. Affiliated to BAMU.">
+<title>शासकीय ज्ञान विज्ञान महाविद्यालय – वार्षिक कॅलेंडर २०२६-२७ | BAMU संलग्न | © Jyoti B. Thorat & Bapu R. Thorat</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #FF6B00; --saffron-light: #FF9A3C;
+    --navy: #0D1B3E; --navy-mid: #1A2F5E;
+    --gold: #F4C430; --gold-light: #FFE08A;
+    --cream: #FFF8EE; --white: #FFFFFF;
+    --green: #1A7A4A; --red: #C0392B;
+    --purple: #6C3483; --teal: #0E7490;
+    --card-shadow: 0 8px 32px rgba(13,27,62,0.13); --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Tiro Devanagari Hindi', serif; background: var(--cream); color: var(--navy); min-height: 100vh; overflow-x: hidden; }
+
+  .app-header { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #2E4A8A 100%); color: white; position: relative; overflow: hidden; }
+  .header-deco { position: absolute; top: 0; right: 0; width: 340px; height: 100%; background: linear-gradient(135deg, transparent 40%, rgba(244,196,48,0.13) 100%); pointer-events: none; }
+  .header-deco2 { position: absolute; bottom: -30px; left: -30px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,107,0,0.10); pointer-events: none; }
+  .header-inner { max-width: 1200px; margin: 0 auto; padding: 22px 32px 16px; display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; }
+  .college-emblem { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--saffron)); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; box-shadow: 0 4px 16px rgba(244,196,48,0.4); }
+  .header-text { flex: 1; }
+  .header-text .maha { font-size: 0.74rem; opacity: 0.65; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 4px; }
+  .header-text h1 { font-family: 'DM Serif Display', serif; font-size: 1.38rem; font-weight: 700; line-height: 1.22; }
+  .header-text .city { font-size: 0.82rem; opacity: 0.68; margin-top: 5px; }
+  .header-year { margin-left: auto; background: rgba(255,255,255,0.10); border: 1.5px solid rgba(244,196,48,0.35); border-radius: 12px; padding: 10px 20px; text-align: center; flex-shrink: 0; }
+  .header-year .yr { font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 600; color: var(--gold); }
+  .header-year .yr-label { font-size: 0.67rem; opacity: 0.65; margin-top: 2px; }
+  .nav-wrap { border-top: 1px solid rgba(255,255,255,0.10); }
+  .nav-tabs { background: var(--navy); padding: 0 32px; display: flex; gap: 0; max-width: 1200px; margin: 0 auto; justify-content: center; }
+  .nav-tab { flex: 1; text-align: center; padding: 13px 20px; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 0.88rem; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold); border-bottom-color: var(--saffron); font-weight: 700; }
+
+  .app-main { max-width: 1200px; margin: 0 auto; padding: 26px 20px 60px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .card { background: white; border-radius: var(--radius); box-shadow: var(--card-shadow); padding: 22px; border: 1px solid rgba(13,27,62,0.07); }
+  .card-title { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--gold-light); display: flex; align-items: center; gap: 8px; }
+
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--navy-mid); margin-bottom: 5px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 9px 13px; border: 1.5px solid #D9E0F0; border-radius: 10px; font-family: 'Tiro Devanagari Hindi', serif; font-size: 0.9rem; background: var(--cream); color: var(--navy); transition: border-color 0.18s, box-shadow 0.18s; outline: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(255,107,0,0.10); background: white; }
+  .form-group textarea { resize: vertical; min-height: 66px; }
+
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 22px; border-radius: 10px; border: none; font-family: 'Tiro Devanagari Hindi', serif; font-size: 0.9rem; cursor: pointer; font-weight: 600; transition: all 0.18s; }
+  .btn-primary { background: linear-gradient(135deg, var(--saffron), #FF8C00); color: white; box-shadow: 0 4px 14px rgba(255,107,0,0.32); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,0,0.42); }
+  .btn-secondary { background: var(--navy); color: white; }
+  .btn-secondary:hover { background: var(--navy-mid); }
+  .btn-danger { background: var(--red); color: white; }
+  .btn-sm { padding: 6px 13px; font-size: 0.78rem; }
+
+  .entry-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 22px; }
+  @media(max-width:780px){ .entry-grid { grid-template-columns: 1fr; } }
+  @media(max-width:900px){
+    .cal-day { height: 110px; }
+    .cal-ev-label { font-size: 0.52rem; height: 14px; padding: 1px 2px; }
+    .cal-ev-more { font-size: 0.5rem; height: 13px; }
+  }
+  @media(max-width:600px){
+    .cal-day { height: 80px; }
+    .cal-ev-label { font-size: 0.48rem; height: 13px; padding: 1px 2px; }
+    .cal-ev-more { font-size: 0.46rem; height: 12px; }
+    .cal-day .day-num { font-size: 0.68rem; }
+  }
+
+  .preview-list { display: flex; flex-direction: column; gap: 9px; max-height: 500px; overflow-y: auto; padding-right: 3px; }
+  .preview-list::-webkit-scrollbar { width: 4px; }
+  .preview-list::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+  .event-item { display: flex; align-items: flex-start; gap: 11px; padding: 11px 13px; border-radius: 11px; background: var(--cream); border: 1px solid rgba(13,27,62,0.07); transition: box-shadow 0.18s; animation: slideIn 0.3s ease; }
+  @keyframes slideIn { from { opacity:0; transform:translateY(-7px); } to { opacity:1; transform:translateY(0); } }
+  .event-item:hover { box-shadow: 0 4px 14px rgba(13,27,62,0.10); }
+  .event-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .event-info { flex: 1; }
+  .event-info .ev-title { font-weight: 700; font-size: 0.9rem; }
+  .event-info .ev-meta { font-size: 0.76rem; color: #64748B; margin-top: 2px; }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+
+  .holiday-notice { background: linear-gradient(135deg,#FFF3E0,#FFE0B2); border: 1.5px solid var(--saffron-light); border-radius: 12px; padding: 12px 18px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.84rem; line-height: 1.5; }
+
+  .holiday-list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 10px; margin-bottom: 6px; }
+  .holiday-card { background: white; border-radius: 12px; padding: 13px 16px; border-left: 5px solid var(--red); box-shadow: 0 3px 12px rgba(13,27,62,0.08); display: flex; gap: 13px; align-items: flex-start; }
+  .holiday-card.national { border-left-color: #FF6B00; }
+  .holiday-card.regional { border-left-color: #1A7A4A; }
+  .hc-date { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: white; background: var(--red); border-radius: 8px; padding: 5px 8px; text-align: center; flex-shrink: 0; line-height: 1.4; min-width: 52px; }
+  .holiday-card.national .hc-date { background: var(--saffron); }
+  .holiday-card.regional .hc-date { background: var(--green); }
+  .hc-info .hc-name { font-weight: 700; font-size: 0.9rem; }
+  .hc-info .hc-day { font-size: 0.75rem; color: #64748B; margin-top: 3px; }
+
+  .filter-bar { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+  .filter-inp { padding:7px 13px;border-radius:20px;border:1.5px solid #D9E0F0;font-family:inherit;font-size:0.82rem;outline:none; }
+  .filter-inp:focus { border-color: var(--saffron); }
+
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 12px; }
+  .cal-header-day { text-align: center; font-size: 0.7rem; font-weight: 700; color: var(--navy-mid); padding: 7px 0; text-transform: uppercase; }
+  .cal-day { height: 130px; background: white; border-radius: 10px; padding: 4px 4px 3px; border: 1px solid #E8EDF5; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 2px; box-sizing: border-box; }
+  .cal-day:not(.empty):hover { box-shadow: 0 3px 14px rgba(13,27,62,0.13); }
+  .cal-day.empty { background: transparent; border: none; }
+  .cal-day.today { border: 2px solid var(--saffron); background: #FFF5EE; }
+  .cal-day.sunday .day-num { color: var(--red); }
+  .cal-day.is-holiday { background: #FFF5F5; border-color: #FFCDD2; }
+  .cal-day .day-num { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; color: var(--navy); margin-bottom: 1px; flex-shrink: 0; line-height: 1; }
+  .cal-day.today .day-num { color: var(--saffron); font-weight: 800; }
+  .cal-event-dot { display: none; }
+  .cal-ev-label {
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 600;
+    line-height: 1.3;
+    padding: 1px 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    flex-shrink: 0;
+    cursor: pointer;
+    height: 16px;
+    box-sizing: border-box;
+  }
+  .cal-ev-more {
+    font-size: 0.55rem;
+    color: #64748B;
+    padding: 1px 3px;
+    background: #F1F5F9;
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    flex-shrink: 0;
+    height: 14px;
+    line-height: 1.1;
+    margin-top: auto;
+  }
+
+  /* ===== EVENT MODAL ===== */
+  .ev-modal-bg { position:fixed;inset:0;background:rgba(13,27,62,0.45);z-index:3000;display:flex;align-items:center;justify-content:center;padding:16px;animation:fadeInBg 0.18s ease; }
+  @keyframes fadeInBg { from{opacity:0} to{opacity:1} }
+  .ev-modal { background:white;border-radius:18px;box-shadow:0 20px 60px rgba(13,27,62,0.25);width:100%;max-width:460px;max-height:85vh;overflow-y:auto;animation:slideUp 0.22s cubic-bezier(.22,1,.36,1); }
+  @keyframes slideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  .ev-modal-head { background:linear-gradient(135deg,var(--navy),#2E4A8A);color:white;padding:16px 20px;border-radius:18px 18px 0 0;display:flex;align-items:center;justify-content:space-between; }
+  .ev-modal-head h3 { font-family:'DM Serif Display',serif;font-size:1.05rem; }
+  .ev-modal-head .close-btn { background:rgba(255,255,255,0.15);border:none;color:white;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:1rem;transition:background 0.15s; }
+  .ev-modal-head .close-btn:hover { background:rgba(255,255,255,0.28); }
+  .ev-modal-body { padding:16px 20px 20px; }
+  .ev-modal-item { display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--cream);border:1px solid rgba(13,27,62,0.07);margin-bottom:8px; }
+  .ev-modal-dot { width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px; }
+  .ev-modal-info .ev-modal-name { font-weight:700;font-size:0.88rem;color:var(--navy);line-height:1.35; }
+  .ev-modal-info .ev-modal-meta { font-size:0.75rem;color:#64748B;margin-top:3px;line-height:1.5; }
+  .ev-modal-badge { display:inline-block;font-size:0.66rem;font-weight:700;padding:2px 8px;border-radius:12px;margin-top:4px; }
+  .month-nav { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .month-nav button { background: none; border: 1.5px solid #D9E0F0; border-radius: 8px; padding: 6px 13px; cursor: pointer; font-size: 1rem; transition: background 0.15s; }
+  .month-nav button:hover { background: #F1F5F9; }
+  .month-label { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--navy); font-weight: 700; min-width: 220px; text-align: center; }
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.78rem; }
+  .legend-dot { width: 11px; height: 11px; border-radius: 50%; }
+
+  .admin-header { background: linear-gradient(135deg, var(--navy), #2E4A8A); color: white; border-radius: var(--radius); padding: 18px 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; box-shadow: var(--card-shadow); flex-wrap: wrap; }
+  .admin-header h2 { font-family: 'DM Serif Display', serif; font-size: 1.22rem; }
+  .admin-header p { font-size: 0.78rem; opacity: 0.7; margin-top: 3px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 13px; margin-bottom: 20px; }
+  .stat-card { background: white; border-radius: 13px; padding: 15px 16px; box-shadow: var(--card-shadow); text-align: center; border-top: 4px solid var(--saffron); transition: transform 0.18s; }
+  .stat-card:hover { transform: translateY(-3px); }
+  .stat-card .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 1.9rem; font-weight: 700; color: var(--navy); }
+  .stat-card .stat-label { font-size: 0.73rem; color: #64748B; margin-top: 3px; }
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--card-shadow); }
+  table { width: 100%; border-collapse: collapse; background: white; }
+  thead { background: var(--navy); color: white; }
+  thead th { padding: 12px 14px; font-size: 0.79rem; font-weight: 600; text-align: left; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid #F1F5F9; transition: background 0.13s; }
+  tbody tr:hover { background: var(--cream); }
+  tbody td { padding: 10px 14px; font-size: 0.85rem; vertical-align: middle; }
+  .holiday-row { background: #FFF0F0 !important; }
+  .tabs-inner { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tab-pill { padding: 7px 16px; border-radius: 20px; background: #F1F5F9; border: none; cursor: pointer; font-family: 'Tiro Devanagari Hindi', serif; font-size: 0.82rem; color: var(--navy); transition: all 0.15s; }
+  .tab-pill.active { background: var(--navy); color: white; }
+  .view-panel { display: none; }
+  .view-panel.active { display: block; }
+  .sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+  .sec-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--navy); display: flex; align-items: center; gap: 10px; }
+  .empty-state { text-align: center; padding: 44px 20px; color: #94A3B8; }
+  .empty-state .empty-icon { font-size: 2.8rem; margin-bottom: 10px; }
+
+  .toast { position: fixed; bottom: 26px; right: 26px; background: var(--navy); color: white; padding: 12px 20px; border-radius: 11px; font-size: 0.86rem; box-shadow: 0 8px 24px rgba(13,27,62,0.3); transform: translateY(80px); opacity: 0; transition: all 0.3s cubic-bezier(.22,1,.36,1); z-index: 2000; max-width: 300px; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--red); }
+
+  /* Calendar holiday panel */
+  .cal-hol-panel { margin-top: 18px; border-top: 2px solid var(--gold-light); padding-top: 16px; }
+  .cal-hol-title { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .cal-hol-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 9px; }
+  .cal-hol-empty { font-size: 0.84rem; color: #94A3B8; padding: 12px 0; text-align: center; }
+  .cal-hol-badge { display: inline-block; font-size: 0.67rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 3px; }
+
+  .admin-locked { display: block; }
+  .admin-content { display: none; }
+
+  /* ===== ENTRY LOCK SCREEN ===== */
+  .entry-locked { display: block; }
+  .entry-unlocked { display: none; }
+
+  /* ===== PASSWORD MANAGER STYLES ===== */
+  .pwd-card { background: white; border-radius: 14px; box-shadow: var(--card-shadow); border: 1px solid rgba(13,27,62,0.07); overflow: hidden; margin-bottom: 12px; }
+  .pwd-card-head { background: linear-gradient(135deg, #1A2F5E, #2E4A8A); color: white; padding: 13px 18px; display: flex; align-items: center; gap: 10px; }
+  .pwd-card-head .dept-name { font-weight: 700; font-size: 0.95rem; flex: 1; }
+  .pwd-card-head .dept-badge { font-size: 0.68rem; background: rgba(255,255,255,0.15); padding: 3px 9px; border-radius: 20px; }
+  .pwd-card-body { padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .pwd-display { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; background: var(--cream); border: 1.5px solid #D9E0F0; border-radius: 9px; padding: 7px 13px; flex: 1; min-width: 140px; letter-spacing: 2px; color: var(--navy); transition: all 0.2s; }
+  .pwd-display.revealed { letter-spacing: 0.5px; background: #F0FFF4; border-color: #6EE7B7; }
+  .pwd-actions { display: flex; gap: 7px; flex-shrink: 0; }
+  .btn-icon { background: none; border: 1.5px solid #D9E0F0; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 0.85rem; transition: all 0.15s; color: var(--navy-mid); }
+  .btn-icon:hover { background: #F1F5F9; border-color: #94A3B8; }
+  .btn-icon.active { background: #EFF6FF; border-color: #3B82F6; color: #2563EB; }
+  .pwd-status { font-size: 0.72rem; color: #64748B; margin-top: 5px; width: 100%; }
+  .pwd-status.active-status { color: #15803D; }
+  .pwd-status.inactive-status { color: #DC2626; }
+
+  .pwd-edit-row { background: #F8FAFC; border-top: 1px solid #E8EDF5; padding: 12px 18px; display: none; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+  .pwd-edit-row.open { display: flex; }
+  .pwd-edit-row .form-group { margin: 0; flex: 1; min-width: 160px; }
+  .pwd-edit-row label { font-size: 0.76rem; }
+
+  .add-teacher-section { background: linear-gradient(135deg, #FFF8EE, #FFEDD5); border: 1.5px solid #FED7AA; border-radius: 14px; padding: 18px; margin-bottom: 18px; }
+  .pwd-search-bar { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+  .teacher-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+  
+  .admin-pwd-section { background: linear-gradient(135deg, #0D1B3E, #1A2F5E); border-radius: 14px; padding: 20px; margin-bottom: 18px; color: white; }
+  .admin-pwd-section h3 { font-family: 'DM Serif Display', serif; margin-bottom: 14px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+  .admin-pwd-section .form-group label { color: rgba(255,255,255,0.75); }
+  .admin-pwd-section .form-group input { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.2); color: white; }
+  .admin-pwd-section .form-group input::placeholder { color: rgba(255,255,255,0.4); }
+  .admin-pwd-section .form-group input:focus { background: rgba(255,255,255,0.18); border-color: var(--gold); }
+
+  .strength-bar { height: 5px; border-radius: 5px; background: #E2E8F0; margin-top: 6px; overflow: hidden; }
+  .strength-fill { height: 100%; border-radius: 5px; transition: width 0.3s, background 0.3s; width: 0%; }
+  .strength-label { font-size: 0.68rem; margin-top: 3px; }
+
+  .teacher-count-badge { background: var(--gold); color: var(--navy); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-left: 8px; }
+  
+  .info-banner { background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border: 1.5px solid #93C5FD; border-radius: 11px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.82rem; color: #1D4ED8; display: flex; gap: 10px; align-items: flex-start; line-height: 1.6; }
+  
+  /* Entry section lock */
+  .entry-lock-screen { max-width: 420px; margin: 0 auto; margin-top: 20px; }
+  .entry-lock-header { background: linear-gradient(135deg, var(--navy), #2E4A8A); color: white; border-radius: var(--radius); padding: 18px 24px; margin-bottom: 18px; display: flex; align-items: center; gap: 14px; }
+  .entry-dept-selector { margin-bottom: 12px; }
+  .locked-entry-hint { font-size: 0.73rem; color: #94A3B8; text-align: center; margin-top: 8px; }
+
+  @media(max-width:600px) {
+    .header-inner { padding: 14px 14px 12px; flex-wrap: wrap; }
+    .header-text h1 { font-size: 1.05rem; }
+    .header-year { display: none; }
+    .app-main { padding: 14px 10px 60px; }
+    .nav-tabs { padding: 0 8px; }
+    .nav-tab { padding: 10px 10px; font-size: 0.76rem; }
+    .cal-day { min-height: 60px; }
+    .cal-day .day-num { font-size: 0.68rem; }
+    .cal-ev-label { font-size: 0.52rem; padding: 1px 3px; }
+  }
+
+  /* ===== PDF / PRINT MODAL ===== */
+  .pdf-modal-bg { position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:5000;display:flex;align-items:center;justify-content:center;padding:16px; }
+  .pdf-modal { background:white;border-radius:18px;width:100%;max-width:700px;max-height:92vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.3);animation:slideUp 0.22s cubic-bezier(.22,1,.36,1); }
+  .pdf-modal-head { background:linear-gradient(135deg,var(--navy),#2E4A8A);color:white;padding:16px 22px;border-radius:18px 18px 0 0;display:flex;align-items:center;justify-content:space-between; }
+  .pdf-modal-head h3 { font-family:'DM Serif Display',serif;font-size:1.05rem; }
+  .pdf-modal-body { padding:18px 22px 22px; }
+
+  /* Signature section */
+  .sig-section { display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px; }
+  @media(max-width:500px){ .sig-section { grid-template-columns:1fr; } }
+  .sig-box { border:1.5px dashed #CBD5E1;border-radius:10px;padding:12px 14px;text-align:center; }
+  .sig-box label { font-size:0.75rem;font-weight:600;color:var(--navy-mid);display:block;margin-bottom:6px; }
+  .sig-box input { width:100%;padding:7px 10px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none; }
+  .sig-box input:focus { border-color:var(--saffron); }
+  .sig-upload-wrap { position:relative;cursor:pointer; }
+  .sig-upload-btn { display:inline-block;padding:6px 14px;background:#F1F5F9;border:1.5px solid #CBD5E1;border-radius:8px;font-size:0.76rem;cursor:pointer;transition:background 0.15s; }
+  .sig-upload-btn:hover { background:#E2E8F0; }
+  .sig-preview { width:100%;max-height:60px;object-fit:contain;margin-top:6px;border-radius:6px;border:1px solid #E2E8F0; }
+
+  /* ===== PRINT LETTERHEAD (only visible when printing) ===== */
+  #printFrame { display:none; }
+
+  @media print {
+    body > *:not(#printFrame) { display:none !important; }
+    #printFrame { display:block !important; width:100%; border:none; }
+  }
+
+  /* ===== EXCEL EXPORT BUTTON ===== */
+  .btn-excel { background:linear-gradient(135deg,#1A7A4A,#16A34A);color:white; }
+  .btn-excel:hover { background:linear-gradient(135deg,#166040,#15803D); }
+  .btn-pdf { background:linear-gradient(135deg,#C0392B,#DC2626);color:white; }
+  .btn-pdf:hover { background:linear-gradient(135deg,#9B2226,#B91C1C); }
+  .btn-print { background:linear-gradient(135deg,#374151,#4B5563);color:white; }
+  .btn-print:hover { background:linear-gradient(135deg,#1F2937,#374151); }
+
+  /* ===== COPYRIGHT FOOTER ===== */
+  .copyright-footer {
+    background: linear-gradient(135deg, #0D1B3E 0%, #1A2F5E 100%);
+    border-top: 3px solid var(--saffron);
+    padding: 13px 24px;
+    text-align: center;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+  }
+  .cr-year { font-family: 'JetBrains Mono', monospace; color: var(--saffron-light); font-weight: 700; }
+  .cr-main { color: rgba(255,255,255,0.82); font-size: 0.76rem; font-weight: 600; margin-bottom: 4px; }
+  .cr-links { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 5px; }
+  .cr-link {
+    color: var(--gold-light);
+    font-size: 0.68rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    opacity: 0.75;
+    transition: opacity 0.15s;
+    background: none;
+    border: none;
+    font-family: inherit;
+    padding: 0;
+  }
+  .cr-link:hover { opacity: 1; }
+  .cr-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(244,196,48,0.12); border: 1px solid rgba(244,196,48,0.25); border-radius: 20px; padding: 2px 10px; font-size: 0.66rem; color: var(--gold-light); margin-left: 10px; vertical-align: middle; }
+
+  /* ===== LEGAL INFO MODAL ===== */
+  .legal-modal-bg { position:fixed;inset:0;background:rgba(13,27,62,0.6);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px;animation:fadeInBg 0.18s ease; }
+  .legal-modal { background:white;border-radius:18px;width:100%;max-width:620px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.35);animation:slideUp 0.22s cubic-bezier(.22,1,.36,1); }
+  .legal-modal-head { background:linear-gradient(135deg,#0D1B3E,#2E4A8A);color:white;padding:16px 22px;border-radius:18px 18px 0 0;display:flex;align-items:center;justify-content:space-between; }
+  .legal-modal-head h3 { font-family:'DM Serif Display',serif;font-size:1.05rem;display:flex;align-items:center;gap:9px; }
+  .legal-modal-body { padding:20px 24px 24px; }
+  .lm-section { margin-bottom:18px; }
+  .lm-label { font-size:0.67rem;text-transform:uppercase;letter-spacing:1.1px;color:#94A3B8;margin-bottom:6px;font-weight:700; }
+  .lm-name { font-family:'DM Serif Display',serif;font-size:1.05rem;color:#0D1B3E;font-weight:700; }
+  .lm-role { font-size:0.76rem;color:#64748B;margin-top:2px; }
+  .lm-act-row { display:flex;flex-wrap:wrap;gap:7px;margin-top:8px; }
+  .lm-act { background:#FFF3E0;color:#C2410C;border-radius:6px;padding:3px 10px;font-size:0.7rem;font-weight:700;font-family:'JetBrains Mono',monospace; }
+  .lm-list { font-size:0.8rem;color:#374151;line-height:1.8;padding-left:4px; }
+  .lm-list li { list-style:none;padding:2px 0; }
+  .lm-list li::before { content:"• ";color:var(--saffron); }
+  .lm-warning { background:linear-gradient(135deg,#FFF5F5,#FEE2E2);border:1.5px solid #FECACA;border-radius:10px;padding:12px 15px;font-size:0.78rem;color:#991B1B;line-height:1.6; }
+  .lm-divider { border:none;border-top:1px solid #F1F5F9;margin:16px 0; }
+
+  @media print { .copyright-footer { display: none !important; } .legal-modal-bg { display: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="header-deco"></div>
+  <div class="header-deco2"></div>
+  <div class="header-inner">
+    <div class="college-emblem">🎓</div>
+    <div class="header-text">
+      <div class="maha">महाराष्ट्र शासन &nbsp;|&nbsp; उच्च व तंत्रशिक्षण विभाग &nbsp;|&nbsp; <span style="color:var(--gold-light);">संलग्न: डॉ. बाबासाहेब आंबेडकर मराठवाडा विद्यापीठ (BAMU)</span></div>
+      <h1>शासकीय ज्ञान विज्ञान महाविद्यालय</h1>
+      <div class="city">📍 छत्रपती संभाजीनगर, महाराष्ट्र</div>
+    </div>
+    <div class="header-year">
+      <div class="yr">२०२६–२७</div>
+      <div class="yr-label">शैक्षणिक वर्ष</div>
+    </div>
+  </div>
+  <div class="nav-wrap">
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="showSection('entry',this)">📝 नोंदणी (भाग १)</div>
+      <div class="nav-tab" onclick="showSection('calendar',this)">📅 कॅलेंडर दृश्य</div>
+      <div class="nav-tab" onclick="showSection('admin',this)">🔐 प्रशासन (भाग २)</div>
+    </div>
+  </div>
+</div>
+
+<div class="app-main">
+
+  <!-- SECTION 1: ENTRY -->
+  <div class="section active" id="sec-entry">
+
+    <!-- ENTRY LOCK SCREEN -->
+    <div class="entry-locked" id="entryLocked">
+      <div class="entry-lock-header">
+        <div style="font-size:2rem;">🔏</div>
+        <div><h2 style="font-family:'DM Serif Display',serif;font-size:1.15rem;">नोंदणी विभाग – प्रवेश</h2><p style="font-size:0.78rem;opacity:0.7;margin-top:3px;">कृपया तुमचा विभाग निवडा आणि संकेतशब्द टाका</p></div>
+      </div>
+      <div class="card entry-lock-screen">
+        <div class="card-title">🔑 विभागीय लॉगिन</div>
+        <div class="form-group entry-dept-selector">
+          <label>विभाग / समिती निवडा *</label>
+          <select id="entryLoginDept" onchange="toggleEntryLoginCustomDept(this)">
+            <option value="">-- विभाग निवडा --</option>
+            <optgroup label="🏛️ शैक्षणिक विभाग">
+              <option>मराठी विभाग</option><option>इंग्रजी विभाग</option><option>हिंदी विभाग</option>
+              <option>इतिहास विभाग</option><option>भूगोल विभाग</option><option>राज्यशास्त्र विभाग</option>
+              <option>समाजशास्त्र विभाग</option><option>अर्थशास्त्र विभाग</option><option>मानसशास्त्र विभाग</option>
+              <option>वाणिज्य विभाग</option><option>विज्ञान विभाग</option><option>गणित विभाग</option>
+              <option>संगणक विभाग</option><option>शारीरिक शिक्षण विभाग</option>
+            </optgroup>
+            <optgroup label="📋 समित्या (२०२६-२७)">
+              <option>Admission B.A. I</option>
+              <option>Admission B.A. II</option>
+              <option>Admission B.A. III</option>
+              <option>Admission B.Sc. I</option>
+              <option>Admission B.Sc. II</option>
+              <option>Admission B.Sc. III</option>
+              <option>Admission M.A. Geography</option>
+              <option>Admission M.A. Music</option>
+              <option>Admission M.A. H. Science</option>
+              <option>Admission XI &amp; XII Science</option>
+              <option>AISHE/NIRF &amp; MSAISHE or DHE Data</option>
+              <option>Alumni Committee</option>
+              <option>Anniversary &amp; Important Event Celebration Committee</option>
+              <option>Anti-Ragging Cell &amp; Committee</option>
+              <option>Anti-Ragging Squad</option>
+              <option>Avishkar Committee</option>
+              <option>Cabteen &amp; Cycle Stand</option>
+              <option>Central Instrumentation Lab</option>
+              <option>Committee for Online Mark Memo Submission - Arts</option>
+              <option>Committee for Online Mark Memo Submission - Science</option>
+              <option>Compilation &amp; Collection of Important Documents</option>
+              <option>Competitive Exam, Career Guidance &amp; Counselling Committee</option>
+              <option>Continuous Internal Assessment Committee</option>
+              <option>Core Committee</option>
+              <option>CSR Committee</option>
+              <option>Cultural Events, Vachan Katta, Kala Katta Committee</option>
+              <option>Debate Elocution</option>
+              <option>Discipline Committee</option>
+              <option>Earn &amp; Learn Scheme</option>
+              <option>Election Committee</option>
+              <option>Energy Audit Committee</option>
+              <option>Equal Opportunity Cell</option>
+              <option>Examination Committee (Sr. College)</option>
+              <option>GASCA Web Blood Bank</option>
+              <option>Green Audit &amp; Botanical Garden Committee</option>
+              <option>Health Committee</option>
+              <option>Hostel Committee - Boys</option>
+              <option>Hostel Committee - Girls</option>
+              <option>Humanities/Social Science Forum</option>
+              <option>Industrial Collaboration &amp; Linkages Cell</option>
+              <option>Institutional Calendar Committee</option>
+              <option>Institutional Development Plan (IDP)</option>
+              <option>Internal Committee</option>
+              <option>Internal DCAS - Arts</option>
+              <option>Internal DCAS - Science</option>
+              <option>IQAC, Internal Audit &amp; Dr. BAMU Audit &amp; CAS Committee</option>
+              <option>Ladies Room Committee</option>
+              <option>Language Laboratory Committee</option>
+              <option>Library Committee</option>
+              <option>Mentor, Mentee Committee (Sr. College)</option>
+              <option>Minority Cell</option>
+              <option>Navras Magazine Committee</option>
+              <option>NCC (Boys)</option>
+              <option>NCC (Girls)</option>
+              <option>NEP Implementation Committee</option>
+              <option>New Course Proposal Committee</option>
+              <option>NPTEL, SWAYAM &amp; MKCL Course Coordinators</option>
+              <option>NSS</option>
+              <option>Parent Teacher Coordination Committee</option>
+              <option>Placement Cell</option>
+              <option>Professional Development &amp; Staff Academy</option>
+              <option>Publicity Committee</option>
+              <option>Purchase Committee</option>
+              <option>Rain Water Harvesting Committee</option>
+              <option>Research &amp; Development Cell</option>
+              <option>Science Forum</option>
+              <option>Skill &amp; Entrepreneurship Development Cell</option>
+              <option>Sport Committee</option>
+              <option>Staff Club &amp; Excursion/Tour Committee</option>
+              <option>Student Council Committee</option>
+              <option>Students Feedback</option>
+              <option>Students Grievance Redressal Committee</option>
+              <option>Timetable Committee</option>
+              <option>Vangmay Mandal / Literary Association</option>
+              <option>Vermi-Composting Project Committee</option>
+              <option>Vidyarthini Manch</option>
+              <option>Website &amp; ICT Committee</option>
+              <option>Website &amp; Social Media</option>
+              <option>Write Off Committee</option>
+              <option>Youth Festival Committee</option>
+              <option>Internship Cell</option>
+              <option>Affiliation Committee</option>
+              <option>Computer Lab. Committee</option>
+            </optgroup>
+            <optgroup label="➕ इतर">
+              <option value="__other__">✏️ इतर (स्वतः लिहा)</option>
+            </optgroup>
+          </select>
+          <input type="text" id="entryLoginDeptCustom" placeholder="तुमच्या विभाग / समितीचे नाव लिहा..." style="display:none;margin-top:8px;" oninput="this.value=this.value">
+        </div>
+        <div class="form-group">
+          <label>संकेतशब्द *</label>
+          <input type="password" id="entryLoginPass" placeholder="तुमचा संकेतशब्द टाका..." onkeydown="if(event.key==='Enter')entryLogin()">
+        </div>
+        <button class="btn btn-primary" onclick="entryLogin()" style="width:100%;justify-content:center;">🔓 प्रवेश करा</button>
+        <p class="locked-entry-hint">संकेतशब्द विसरल्यास प्रशासकांशी संपर्क करा.</p>
+      </div>
+    </div>
+
+    <!-- ACTUAL ENTRY CONTENT (shown after login) -->
+    <div class="entry-unlocked" id="entryUnlocked">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:9px;">
+        <div id="entryWelcomeBanner" style="background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1.5px solid #6EE7B7;border-radius:10px;padding:10px 16px;font-size:0.85rem;color:#166534;display:flex;align-items:center;gap:9px;flex:1;">
+          <span style="font-size:1.3rem;">👤</span>
+          <span id="entryWelcomeText">स्वागत आहे!</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="entryLogout()">🔒 बाहेर पडा</button>
+      </div>
+      <div class="sec-header">
+        <div class="sec-title">📝 कार्यक्रम / नियोजन नोंदणी</div>
+        <div style="font-size:0.8rem;color:#64748B;" id="entryDeptLabel"></div>
+      </div>
+
+      <!-- BAMU Notice Banner -->
+      <div class="holiday-notice" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-color:#3B82F6;margin-bottom:18px;">
+        <div style="font-size:1.3rem;flex-shrink:0;">🎓</div>
+        <div>
+          <strong style="color:#1D4ED8;">BAMU अकॅडेमिक कॅलेंडर २०२६-२७ अद्यावत केले आहे.</strong><br>
+          डॉ. बाबासाहेब आंबेडकर मराठवाडा विद्यापीठाच्या (BAMU) अधिकृत वेळापत्रकानुसार <strong>${BAMU_EVENTS.length} विद्यापीठ कार्यक्रम</strong> आधीच नोंदवले आहेत — प्रवेश प्रक्रिया, विषम/सम सत्र परीक्षा, निकाल, दीक्षांत समारंभ इत्यादी.
+          <span style="font-size:0.75rem;color:#3B82F6;"> | <a href="https://bamua.digitaluniversity.ac/" target="_blank" style="color:#2563EB;">bamua.digitaluniversity.ac ↗</a></span>
+        </div>
+      </div>
+      <div class="entry-grid">
+      <div class="card">
+        <div class="card-title">✏️ नवीन नोंद करा</div>
+        <div class="form-group">
+          <label>विभाग / समिती निवडा *</label>
+          <select id="dept" onchange="toggleCustomDept(this)">
+            <option value="">-- निवडा --</option>
+            <optgroup label="🏛️ शैक्षणिक विभाग">
+              <option>मराठी विभाग</option><option>इंग्रजी विभाग</option><option>हिंदी विभाग</option>
+              <option>इतिहास विभाग</option><option>भूगोल विभाग</option><option>राज्यशास्त्र विभाग</option>
+              <option>समाजशास्त्र विभाग</option><option>अर्थशास्त्र विभाग</option><option>मानसशास्त्र विभाग</option>
+              <option>वाणिज्य विभाग</option><option>विज्ञान विभाग</option><option>गणित विभाग</option>
+              <option>संगणक विभाग</option><option>शारीरिक शिक्षण विभाग</option>
+            </optgroup>
+            <optgroup label="📋 समित्या (२०२६-२७)">
+              <option>Admission B.A. I</option>
+              <option>Admission B.A. II</option>
+              <option>Admission B.A. III</option>
+              <option>Admission B.Sc. I</option>
+              <option>Admission B.Sc. II</option>
+              <option>Admission B.Sc. III</option>
+              <option>Admission M.A. Geography</option>
+              <option>Admission M.A. Music</option>
+              <option>Admission M.A. H. Science</option>
+              <option>Admission XI &amp; XII Science</option>
+              <option>AISHE/NIRF &amp; MSAISHE or DHE Data</option>
+              <option>Alumni Committee</option>
+              <option>Anniversary &amp; Important Event Celebration Committee</option>
+              <option>Anti-Ragging Cell &amp; Committee</option>
+              <option>Anti-Ragging Squad</option>
+              <option>Avishkar Committee</option>
+              <option>Cabteen &amp; Cycle Stand</option>
+              <option>Central Instrumentation Lab</option>
+              <option>Committee for Online Mark Memo Submission - Arts</option>
+              <option>Committee for Online Mark Memo Submission - Science</option>
+              <option>Compilation &amp; Collection of Important Documents</option>
+              <option>Competitive Exam, Career Guidance &amp; Counselling Committee</option>
+              <option>Continuous Internal Assessment Committee</option>
+              <option>Core Committee</option>
+              <option>CSR Committee</option>
+              <option>Cultural Events, Vachan Katta, Kala Katta Committee</option>
+              <option>Debate Elocution</option>
+              <option>Discipline Committee</option>
+              <option>Earn &amp; Learn Scheme</option>
+              <option>Election Committee</option>
+              <option>Energy Audit Committee</option>
+              <option>Equal Opportunity Cell</option>
+              <option>Examination Committee (Sr. College)</option>
+              <option>GASCA Web Blood Bank</option>
+              <option>Green Audit &amp; Botanical Garden Committee</option>
+              <option>Health Committee</option>
+              <option>Hostel Committee - Boys</option>
+              <option>Hostel Committee - Girls</option>
+              <option>Humanities/Social Science Forum</option>
+              <option>Industrial Collaboration &amp; Linkages Cell</option>
+              <option>Institutional Calendar Committee</option>
+              <option>Institutional Development Plan (IDP)</option>
+              <option>Internal Committee</option>
+              <option>Internal DCAS - Arts</option>
+              <option>Internal DCAS - Science</option>
+              <option>IQAC, Internal Audit &amp; Dr. BAMU Audit &amp; CAS Committee</option>
+              <option>Ladies Room Committee</option>
+              <option>Language Laboratory Committee</option>
+              <option>Library Committee</option>
+              <option>Mentor, Mentee Committee (Sr. College)</option>
+              <option>Minority Cell</option>
+              <option>Navras Magazine Committee</option>
+              <option>NCC (Boys)</option>
+              <option>NCC (Girls)</option>
+              <option>NEP Implementation Committee</option>
+              <option>New Course Proposal Committee</option>
+              <option>NPTEL, SWAYAM &amp; MKCL Course Coordinators</option>
+              <option>NSS</option>
+              <option>Parent Teacher Coordination Committee</option>
+              <option>Placement Cell</option>
+              <option>Professional Development &amp; Staff Academy</option>
+              <option>Publicity Committee</option>
+              <option>Purchase Committee</option>
+              <option>Rain Water Harvesting Committee</option>
+              <option>Research &amp; Development Cell</option>
+              <option>Science Forum</option>
+              <option>Skill &amp; Entrepreneurship Development Cell</option>
+              <option>Sport Committee</option>
+              <option>Staff Club &amp; Excursion/Tour Committee</option>
+              <option>Student Council Committee</option>
+              <option>Students Feedback</option>
+              <option>Students Grievance Redressal Committee</option>
+              <option>Timetable Committee</option>
+              <option>Vangmay Mandal / Literary Association</option>
+              <option>Vermi-Composting Project Committee</option>
+              <option>Vidyarthini Manch</option>
+              <option>Website &amp; ICT Committee</option>
+              <option>Website &amp; Social Media</option>
+              <option>Write Off Committee</option>
+              <option>Youth Festival Committee</option>
+              <option>Internship Cell</option>
+              <option>Affiliation Committee</option>
+              <option>Computer Lab. Committee</option>
+            </optgroup>
+            <optgroup label="➕ इतर">
+              <option value="__other__">✏️ इतर (स्वतः लिहा)</option>
+            </optgroup>
+          </select>
+          <input type="text" id="deptCustom" placeholder="विभाग / समितीचे नाव लिहा..." style="display:none;margin-top:8px;">
+        </div>
+        <div class="form-group">
+          <label>कार्यक्रमाचा प्रकार *</label>
+          <select id="evtype">
+            <option value="">-- निवडा --</option>
+            <option value="exam">🟣 परीक्षा (अंतर्गत)</option>
+            <option value="univ-exam">🔵 विद्यापीठ परीक्षा</option>
+            <option value="cultural">🟠 सांस्कृतिक कार्यक्रम</option>
+            <option value="sports">🟢 क्रीडा कार्यक्रम</option>
+            <option value="committee">🟡 समिती कार्यक्रम</option>
+            <option value="dept">🩵 विभागीय कार्यक्रम</option>
+            <option value="meeting">⚫ सभा / बैठक</option>
+            <option value="other">⬜ इतर</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>कार्यक्रमाचे नाव *</label>
+          <input type="text" id="evname" placeholder="उदा. वार्षिक क्रीडा स्पर्धा...">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
+          <div class="form-group"><label>दिनांक (सुरुवात) *</label><input type="date" id="evdate"></div>
+          <div class="form-group"><label>दिनांक (समाप्ती)</label><input type="date" id="evdate2"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
+          <div class="form-group"><label>वेळ</label><input type="time" id="evtime"></div>
+          <div class="form-group"><label>ठिकाण / स्थळ</label><input type="text" id="evplace" placeholder="सभागृह, मैदान..."></div>
+        </div>
+        <div class="form-group"><label>तपशील / नोंद</label><textarea id="evdesc" placeholder="अधिक माहिती..."></textarea></div>
+        <div class="form-group"><label>नोंदणी करणाऱ्याचे नाव</label><input type="text" id="evby" placeholder="प्राध्यापकाचे नाव"></div>
+        <button class="btn btn-primary" onclick="addEvent()" style="width:100%;justify-content:center;">✅ नोंद जतन करा</button>
+        <button class="btn btn-pdf" onclick="openPdfModal()" style="width:100%;justify-content:center;margin-top:9px;">📄 PDF सह letterhead डाउनलोड करा</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 नोंदणी झालेले कार्यक्रम</div>
+        <div class="filter-bar">
+          <input type="text" id="searchFilter" placeholder="🔍 शोधा..." onkeyup="filterEvents()" class="filter-inp" style="width:155px;">
+          <select id="typeFilter" onchange="filterEvents()" class="filter-inp">
+            <option value="">सर्व प्रकार</option>
+            <option value="exam">अंतर्गत परीक्षा</option><option value="univ-exam">विद्यापीठ परीक्षा</option>
+            <option value="cultural">सांस्कृतिक</option><option value="sports">क्रीडा</option>
+            <option value="committee">समिती</option><option value="dept">विभागीय</option><option value="meeting">सभा</option>
+          </select>
+        </div>
+        <div class="preview-list" id="previewList">
+          <div class="empty-state"><div class="empty-icon">📭</div><p>अद्याप कोणतीही नोंद नाही.<br>वरील फॉर्म भरून नोंदणी करा.</p></div>
+        </div>
+      </div>
+    </div><!-- /entry-grid -->
+    </div><!-- /entry-unlocked -->
+  </div><!-- /sec-entry -->
+
+  <!-- SECTION: CALENDAR -->
+  <div class="section" id="sec-calendar">
+    <div class="sec-header"><div class="sec-title">📅 मासिक कॅलेंडर दृश्य</div></div>
+    <div class="card">
+      <div class="month-nav">
+        <button onclick="changeMonth(-1)">◀</button>
+        <div class="month-label" id="monthLabel"></div>
+        <button onclick="changeMonth(1)">▶</button>
+        <button class="btn btn-secondary btn-sm" onclick="goToday()" style="margin-left:auto;">आजचा दिवस</button>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>सार्वजनिक सुट्टी</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#6C3483"></div>अंतर्गत परीक्षा</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#0E7490"></div>विद्यापीठ परीक्षा (BAMU)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FF6B00"></div>सांस्कृतिक</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1A7A4A"></div>क्रीडा</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#D4A017"></div>समिती / BAMU प्रशासन</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>विभागीय</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+
+      <!-- शासकीय सुट्ट्या – त्याच महिन्यातील -->
+      <div class="cal-hol-panel">
+        <div class="cal-hol-title">🔴 या महिन्यातील शासकीय सुट्ट्या</div>
+        <div class="cal-hol-grid" id="calHolGrid">
+          <div class="cal-hol-empty">या महिन्यात कोणतीही शासकीय सुट्टी नाही.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: ADMIN -->
+  <div class="section" id="sec-admin">
+    <div class="admin-locked" id="adminLocked">
+      <div class="admin-header">
+        <div style="font-size:2rem;">🔐</div>
+        <div><h2>प्रशासक लॉगिन</h2><p>शासकीय ज्ञान विज्ञान महाविद्यालय, छत्रपती संभाजीनगर</p></div>
+      </div>
+      <div class="card" style="max-width:380px;margin:0 auto;margin-top:18px;">
+        <div class="card-title">🔑 लॉगिन करा</div>
+        <div class="form-group"><label>वापरकर्ता नाव (ID)</label><input type="text" id="adminUser" placeholder="Admin ID टाका"></div>
+        <div class="form-group"><label>संकेतशब्द</label><input type="password" id="adminPass" placeholder="संकेतशब्द टाका" onkeydown="if(event.key==='Enter')adminLogin()"></div>
+        <button class="btn btn-primary" onclick="adminLogin()" style="width:100%;justify-content:center;">🔓 प्रवेश करा</button>
+        <p style="font-size:0.73rem;color:#94A3B8;text-align:center;margin-top:10px;">डीफॉल्ट ID: admin &nbsp;|&nbsp; डीफॉल्ट संकेतशब्द: admin123</p>
+      </div>
+    </div>
+
+    <div class="admin-content" id="adminContent">
+      <div class="admin-header">
+        <div style="font-size:2rem;">🛡️</div>
+        <div><h2>प्रशासक नियंत्रण कक्ष</h2><p>शासकीय ज्ञान विज्ञान महाविद्यालय, छत्रपती संभाजीनगर | शैक्षणिक वर्ष २०२६-२७</p></div>
+        <button class="btn btn-danger btn-sm" onclick="adminLogout()" style="margin-left:auto;">बाहेर पडा</button>
+      </div>
+      <div class="stats-row" id="statsRow"></div>
+      <div class="tabs-inner">
+        <button class="tab-pill active" onclick="adminTab('table',this)">📋 सर्व नोंदी</button>
+        <button class="tab-pill" onclick="adminTab('monthly',this)">📆 मासिक सारांश</button>
+        <button class="tab-pill" onclick="adminTab('deptwise',this)">🏛️ विभागनिहाय</button>
+        <button class="tab-pill" onclick="adminTab('holview',this)">🔴 सुट्ट्यांची यादी</button>
+        <button class="tab-pill" onclick="adminTab('pwdmgr',this)">🔑 संकेतशब्द व्यवस्थापन</button>
+        <button class="tab-pill" onclick="adminTab('export',this)">📤 निर्यात</button>
+      </div>
+
+      <div class="view-panel active" id="vp-table">
+        <div class="filter-bar">
+          <input type="text" id="adminSearch" placeholder="🔍 शोधा..." onkeyup="renderAdminTable()" class="filter-inp" style="width:180px;">
+          <select id="adminTypeFilter" onchange="renderAdminTable()" class="filter-inp">
+            <option value="">सर्व प्रकार</option>
+            <option value="holiday">सार्व. सुट्टी</option><option value="exam">अंतर्गत परीक्षा</option>
+            <option value="univ-exam">विद्यापीठ परीक्षा</option><option value="cultural">सांस्कृतिक</option>
+            <option value="sports">क्रीडा</option><option value="committee">समिती</option>
+            <option value="dept">विभागीय</option><option value="meeting">सभा</option>
+          </select>
+          <select id="adminDeptFilter" onchange="renderAdminTable()" class="filter-inp"></select>
+          <button class="btn btn-danger btn-sm" onclick="clearUserEvents()">🗑️ विभागीय नोंदी हटवा</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>#</th><th>विभाग / समिती</th><th>कार्यक्रम</th><th>प्रकार</th>
+              <th>दिनांक</th><th>वेळ</th><th>स्थळ</th><th>नोंदणीकर्ता</th><th>क्रिया</th>
+            </tr></thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="view-panel" id="vp-monthly"><div id="monthlySummary"></div></div>
+      <div class="view-panel" id="vp-deptwise"><div id="deptwiseSummary"></div></div>
+      <div class="view-panel" id="vp-holview">
+        <div class="card">
+          <div class="card-title">🔴 अधिकृत सार्वजनिक सुट्ट्या – शैक्षणिक वर्ष २०२६-२७</div>
+          <div id="holidaySummaryAdmin"></div>
+          <div class="card-title" style="margin-top:20px;">🎓 BAMU विद्यापीठ – अकॅडेमिक कार्यक्रम २०२६-२७</div>
+          <div id="bamuEventsSummaryAdmin"></div>
+        </div>
+      </div>
+      <div class="view-panel" id="vp-pwdmgr">
+        <!-- Admin Credentials Change -->
+        <div class="admin-pwd-section">
+          <h3>🛡️ प्रशासक लॉगिन तपशील बदला</h3>
+
+          <!-- Current credentials info banner -->
+          <div id="adminCredInfo" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1.5px solid #93C5FD;border-radius:10px;padding:11px 16px;margin-bottom:16px;font-size:0.83rem;color:#1E40AF;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:1.2rem;flex-shrink:0;">👤</span>
+            <span>सध्याची Admin ID: <strong id="currentAdminIdDisplay"></strong> &nbsp;|&nbsp; संकेतशब्द: <span id="currentAdminPassDisplay">••••••••</span></span>
+          </div>
+
+          <!-- Change Admin ID -->
+          <div style="border:1.5px solid #E2E8F0;border-radius:12px;padding:16px 18px;margin-bottom:14px;background:#FAFBFF;">
+            <div style="font-weight:700;font-size:0.9rem;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:7px;">🪪 Admin ID (वापरकर्ता नाव) बदला</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+              <div class="form-group" style="margin:0;">
+                <label>सध्याचा संकेतशब्द (पडताळणीसाठी) *</label>
+                <input type="password" id="adminIdVerifyPass" placeholder="सध्याचा संकेतशब्द टाका...">
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>नवीन Admin ID *</label>
+                <input type="text" id="adminNewId" placeholder="नवीन वापरकर्ता नाव...">
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>नवीन Admin ID (पुन्हा) *</label>
+                <input type="text" id="adminConfirmId" placeholder="पुन्हा टाका...">
+              </div>
+            </div>
+            <button class="btn btn-secondary" onclick="changeAdminId()" style="margin-top:10px;">🔄 Admin ID अद्यतन करा</button>
+          </div>
+
+          <!-- Change Admin Password -->
+          <div style="border:1.5px solid #E2E8F0;border-radius:12px;padding:16px 18px;background:#FAFBFF;">
+            <div style="font-weight:700;font-size:0.9rem;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:7px;">🔒 Admin संकेतशब्द बदला</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+              <div class="form-group" style="margin:0;">
+                <label>सध्याचा संकेतशब्द</label>
+                <input type="password" id="adminOldPass" placeholder="जुना संकेतशब्द टाका...">
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>नवीन संकेतशब्द</label>
+                <input type="password" id="adminNewPass" placeholder="नवीन संकेतशब्द..." oninput="checkPwdStrength(this.value,'adminStrengthFill','adminStrengthLabel')">
+                <div class="strength-bar"><div class="strength-fill" id="adminStrengthFill"></div></div>
+                <div class="strength-label" id="adminStrengthLabel"></div>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>नवीन संकेतशब्द (पुन्हा)</label>
+                <input type="password" id="adminConfirmPass" placeholder="पुन्हा टाका...">
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="changeAdminPassword()" style="margin-top:10px;">🔄 संकेतशब्द अद्यतन करा</button>
+          </div>
+        </div>
+
+        <!-- Teacher Password Manager -->
+        <div class="info-banner">
+          <span style="font-size:1.3rem;flex-shrink:0;">ℹ️</span>
+          <div>
+            <strong>शिक्षक संकेतशब्द व्यवस्थापन:</strong> येथे प्रत्येक विभाग / समितीसाठी वेगळा संकेतशब्द तयार करता येईल. शिक्षकांनी भाग १ मध्ये प्रवेश करण्यासाठी हा संकेतशब्द वापरावा. नवीन विभाग जोडणे, संकेतशब्द बदलणे आणि निष्क्रिय करण्याची सुविधा उपलब्ध आहे.
+          </div>
+        </div>
+
+        <!-- Add New Teacher/Dept -->
+        <div class="add-teacher-section">
+          <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--navy);margin-bottom:13px;display:flex;align-items:center;gap:7px;">➕ नवीन विभाग / शिक्षक जोडा</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;align-items:flex-end;">
+            <div class="form-group" style="margin:0;">
+              <label>विभाग / समिती निवडा किंवा लिहा</label>
+              <select id="newTeacherDept" onchange="toggleNewDeptCustom(this)">
+                <option value="">-- निवडा --</option>
+                <optgroup label="🏛️ शैक्षणिक विभाग">
+                  <option>मराठी विभाग</option><option>इंग्रजी विभाग</option><option>हिंदी विभाग</option>
+                  <option>इतिहास विभाग</option><option>भूगोल विभाग</option><option>राज्यशास्त्र विभाग</option>
+                  <option>समाजशास्त्र विभाग</option><option>अर्थशास्त्र विभाग</option><option>मानसशास्त्र विभाग</option>
+                  <option>वाणिज्य विभाग</option><option>विज्ञान विभाग</option><option>गणित विभाग</option>
+                  <option>संगणक विभाग</option><option>शारीरिक शिक्षण विभाग</option>
+                </optgroup>
+                <optgroup label="📋 समित्या (२०२६-२७)">
+                  <option>Admission B.A. I</option>
+                  <option>Admission B.A. II</option>
+                  <option>Admission B.A. III</option>
+                  <option>Admission B.Sc. I</option>
+                  <option>Admission B.Sc. II</option>
+                  <option>Admission B.Sc. III</option>
+                  <option>Admission M.A. Geography</option>
+                  <option>Admission M.A. Music</option>
+                  <option>Admission M.A. H. Science</option>
+                  <option>Admission XI &amp; XII Science</option>
+                  <option>AISHE/NIRF &amp; MSAISHE or DHE Data</option>
+                  <option>Alumni Committee</option>
+                  <option>Anniversary &amp; Important Event Celebration Committee</option>
+                  <option>Anti-Ragging Cell &amp; Committee</option>
+                  <option>Anti-Ragging Squad</option>
+                  <option>Avishkar Committee</option>
+                  <option>Cabteen &amp; Cycle Stand</option>
+                  <option>Central Instrumentation Lab</option>
+                  <option>Committee for Online Mark Memo Submission - Arts</option>
+                  <option>Committee for Online Mark Memo Submission - Science</option>
+                  <option>Compilation &amp; Collection of Important Documents</option>
+                  <option>Competitive Exam, Career Guidance &amp; Counselling Committee</option>
+                  <option>Continuous Internal Assessment Committee</option>
+                  <option>Core Committee</option>
+                  <option>CSR Committee</option>
+                  <option>Cultural Events, Vachan Katta, Kala Katta Committee</option>
+                  <option>Debate Elocution</option>
+                  <option>Discipline Committee</option>
+                  <option>Earn &amp; Learn Scheme</option>
+                  <option>Election Committee</option>
+                  <option>Energy Audit Committee</option>
+                  <option>Equal Opportunity Cell</option>
+                  <option>Examination Committee (Sr. College)</option>
+                  <option>GASCA Web Blood Bank</option>
+                  <option>Green Audit &amp; Botanical Garden Committee</option>
+                  <option>Health Committee</option>
+                  <option>Hostel Committee - Boys</option>
+                  <option>Hostel Committee - Girls</option>
+                  <option>Humanities/Social Science Forum</option>
+                  <option>Industrial Collaboration &amp; Linkages Cell</option>
+                  <option>Institutional Calendar Committee</option>
+                  <option>Institutional Development Plan (IDP)</option>
+                  <option>Internal Committee</option>
+                  <option>Internal DCAS - Arts</option>
+                  <option>Internal DCAS - Science</option>
+                  <option>IQAC, Internal Audit &amp; Dr. BAMU Audit &amp; CAS Committee</option>
+                  <option>Ladies Room Committee</option>
+                  <option>Language Laboratory Committee</option>
+                  <option>Library Committee</option>
+                  <option>Mentor, Mentee Committee (Sr. College)</option>
+                  <option>Minority Cell</option>
+                  <option>Navras Magazine Committee</option>
+                  <option>NCC (Boys)</option>
+                  <option>NCC (Girls)</option>
+                  <option>NEP Implementation Committee</option>
+                  <option>New Course Proposal Committee</option>
+                  <option>NPTEL, SWAYAM &amp; MKCL Course Coordinators</option>
+                  <option>NSS</option>
+                  <option>Parent Teacher Coordination Committee</option>
+                  <option>Placement Cell</option>
+                  <option>Professional Development &amp; Staff Academy</option>
+                  <option>Publicity Committee</option>
+                  <option>Purchase Committee</option>
+                  <option>Rain Water Harvesting Committee</option>
+                  <option>Research &amp; Development Cell</option>
+                  <option>Science Forum</option>
+                  <option>Skill &amp; Entrepreneurship Development Cell</option>
+                  <option>Sport Committee</option>
+                  <option>Staff Club &amp; Excursion/Tour Committee</option>
+                  <option>Student Council Committee</option>
+                  <option>Students Feedback</option>
+                  <option>Students Grievance Redressal Committee</option>
+                  <option>Timetable Committee</option>
+                  <option>Vangmay Mandal / Literary Association</option>
+                  <option>Vermi-Composting Project Committee</option>
+                  <option>Vidyarthini Manch</option>
+                  <option>Website &amp; ICT Committee</option>
+                  <option>Website &amp; Social Media</option>
+                  <option>Write Off Committee</option>
+                  <option>Youth Festival Committee</option>
+                  <option>Internship Cell</option>
+                  <option>Affiliation Committee</option>
+                  <option>Computer Lab. Committee</option>
+                </optgroup>
+                <optgroup label="➕ इतर"><option value="__custom__">✏️ स्वतः लिहा</option></optgroup>
+              </select>
+              <input type="text" id="newTeacherDeptCustom" placeholder="विभागाचे नाव लिहा..." style="display:none;margin-top:8px;">
+            </div>
+            <div class="form-group" style="margin:0;">
+              <label>प्रतिनिधीचे नाव (पर्यायी)</label>
+              <input type="text" id="newTeacherName" placeholder="प्रा. नाव...">
+            </div>
+            <div class="form-group" style="margin:0;">
+              <label>संकेतशब्द सेट करा *</label>
+              <input type="password" id="newTeacherPass" placeholder="संकेतशब्द..." oninput="checkPwdStrength(this.value,'newStrengthFill','newStrengthLabel')">
+              <div class="strength-bar"><div class="strength-fill" id="newStrengthFill"></div></div>
+              <div class="strength-label" id="newStrengthLabel"></div>
+            </div>
+            <div>
+              <button class="btn btn-primary" onclick="addTeacherPassword()" style="width:100%;justify-content:center;">✅ जोडा</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search / Filter -->
+        <div class="pwd-search-bar">
+          <input type="text" id="pwdSearch" placeholder="🔍 विभाग शोधा..." oninput="renderPasswordManager()" class="filter-inp" style="width:200px;">
+          <select id="pwdFilter" onchange="renderPasswordManager()" class="filter-inp">
+            <option value="">सर्व</option>
+            <option value="active">✅ सक्रिय</option>
+            <option value="inactive">❌ निष्क्रिय</option>
+          </select>
+          <span style="font-size:0.82rem;color:#64748B;margin-left:auto;">एकूण विभाग: <span id="pwdTotalCount" class="teacher-count-badge">0</span></span>
+        </div>
+
+        <!-- Teacher Cards Grid -->
+        <div class="teacher-grid" id="teacherPasswordGrid">
+          <div class="empty-state"><div class="empty-icon">🔑</div><p>अद्याप कोणताही विभाग जोडलेला नाही.</p></div>
+        </div>
+      </div>
+
+      <div class="view-panel" id="vp-export">
+        <div class="card">
+          <div class="card-title">📤 डेटा निर्यात / मुद्रण</div>
+          <p style="font-size:0.85rem;color:#64748B;margin-bottom:20px;">कार्यक्रमांची संपूर्ण यादी विविध स्वरूपात डाउनलोड किंवा मुद्रित करा.</p>
+
+          <!-- PDF / Print -->
+          <div style="background:linear-gradient(135deg,#FFF5F5,#FEE2E2);border:1.5px solid #FECACA;border-radius:12px;padding:16px 18px;margin-bottom:14px;">
+            <div style="font-weight:700;font-size:0.92rem;color:#991B1B;margin-bottom:10px;">🖨️ PDF / प्रिंट</div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;">
+              <button class="btn btn-pdf" onclick="adminPrintReport('all')">📄 संपूर्ण अहवाल PDF</button>
+              <button class="btn btn-print" onclick="adminPrintReport('user')">📋 विभागीय नोंदी प्रिंट</button>
+              <button class="btn btn-print" onclick="adminPrintReport('holidays')">🔴 सुट्ट्या यादी प्रिंट</button>
+              <button class="btn btn-print" onclick="adminPrintReport('bamu')">🎓 BAMU कार्यक्रम प्रिंट</button>
+            </div>
+          </div>
+
+          <!-- Excel / CSV -->
+          <div style="background:linear-gradient(135deg,#F0FFF4,#DCFCE7);border:1.5px solid #6EE7B7;border-radius:12px;padding:16px 18px;margin-bottom:14px;">
+            <div style="font-weight:700;font-size:0.92rem;color:#166534;margin-bottom:10px;">📊 Excel / CSV</div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;">
+              <button class="btn btn-excel" onclick="exportExcel('all')">📊 Excel – सर्व नोंदी</button>
+              <button class="btn btn-excel" onclick="exportExcel('user')">📊 Excel – विभागीय नोंदी</button>
+              <button class="btn btn-excel" onclick="exportExcel('holidays')">📊 Excel – सुट्ट्या</button>
+              <button class="btn" style="background:#0E7490;color:white;" onclick="exportCSV()">📁 CSV डाउनलोड</button>
+            </div>
+          </div>
+
+          <!-- JSON Backup -->
+          <div style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1.5px solid #93C5FD;border-radius:12px;padding:16px 18px;">
+            <div style="font-weight:700;font-size:0.92rem;color:#1E40AF;margin-bottom:10px;">💾 बॅकअप / पुनर्संचय</div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+              <button class="btn btn-secondary" onclick="exportJSON()">💾 JSON बॅकअप डाउनलोड</button>
+              <label class="btn" style="background:#374151;color:white;cursor:pointer;">
+                📥 JSON आयात करा
+                <input type="file" id="importFile" accept=".json" onchange="importJSON(this)" style="display:none;">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app-main -->
+
+<!-- ===== COPYRIGHT FOOTER ===== -->
+<footer class="copyright-footer">
+  <div class="cr-main">
+    © <span class="cr-year">2026</span> Jyoti B. Thorat &amp; Bapu R. Thorat &nbsp;|&nbsp; All Rights Reserved &nbsp;|&nbsp; Unauthorized use is punishable under Indian Copyright Law
+    <span class="cr-badge">🔒 IP Protected</span>
+  </div>
+  <div class="cr-links">
+    <button class="cr-link" onclick="openLegalModal('ownership')">👤 Ownership & Credits</button>
+    <button class="cr-link" onclick="openLegalModal('legal')">⚖️ Legal Notice</button>
+    <button class="cr-link" onclick="openLegalModal('acts')">📜 Applicable Laws</button>
+    <button class="cr-link" onclick="openLegalModal('prohibited')">🚫 Prohibited Activities</button>
+    <button class="cr-link" onclick="openLegalModal('contact')">📩 Legal Contact</button>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<iframe id="printFrame" style="display:none;width:0;height:0;border:none;position:fixed;left:-9999px;top:-9999px;"></iframe>
+
+<script>
+// ===== MAHARASHTRA GOVT OFFICIAL HOLIDAYS 2025-26 =====
+// Ref: परक्राम्य संलेख अधिनियम, १८८१ – कलम २५, सामान्य प्रशासन विभाग, महाराष्ट्र शासन
+
+const GOVT_HOLIDAYS_AY = [
+  // ===== जुलै – डिसेंबर २०२५ =====
+  // Ref: महाराष्ट्र शासन – GAD परिपत्रक २०२५
+  { date:'2025-07-06', name:'मोहरम', day:'रविवार', type:'regional' },
+  { date:'2025-08-15', name:'स्वातंत्र्य दिन', day:'शुक्रवार', type:'national' },
+  { date:'2025-08-16', name:'पारशी नववर्ष (शहेनशाही)', day:'शनिवार', type:'regional' },
+  { date:'2025-08-27', name:'गणेश चतुर्थी', day:'बुधवार', type:'regional' },
+  { date:'2025-09-05', name:'ईद-ए-मिलाद (पैगंबर जयंती)', day:'शुक्रवार', type:'regional' },
+  { date:'2025-10-02', name:'महात्मा गांधी जयंती', day:'गुरुवार', type:'national' },
+  { date:'2025-10-02', name:'दसरा (विजयादशमी)', day:'गुरुवार', type:'regional' },
+  { date:'2025-10-20', name:'दिवाळी – वसुबारस', day:'सोमवार', type:'regional' },
+  { date:'2025-10-21', name:'दिवाळी – धनत्रयोदशी', day:'मंगळवार', type:'regional' },
+  { date:'2025-10-22', name:'दिवाळी – नरक चतुर्दशी / लक्ष्मीपूजन', day:'बुधवार', type:'regional' },
+  { date:'2025-10-23', name:'दिवाळी – बळी प्रतिपदा', day:'गुरुवार', type:'regional' },
+  { date:'2025-10-24', name:'दिवाळी – भाऊबीज', day:'शुक्रवार', type:'regional' },
+  { date:'2025-11-05', name:'गुरुनानक जयंती', day:'बुधवार', type:'regional' },
+  { date:'2025-12-06', name:'महापरिनिर्वाण दिन (डॉ. बाबासाहेब आंबेडकर)', day:'शनिवार', type:'national' },
+  { date:'2025-12-25', name:'ख्रिसमस', day:'गुरुवार', type:'national' },
+  // ===== जानेवारी – जून २०२६ =====
+  // Ref: महाराष्ट्र शासन – GAD अधिसूचना, डिसेंबर ५, २०२५ (२४ सार्वजनिक सुट्ट्या)
+  { date:'2026-01-26', name:'प्रजासत्ताक दिन', day:'सोमवार', type:'national' },
+  { date:'2026-02-15', name:'महाशिवरात्री', day:'रविवार', type:'regional' },
+  { date:'2026-02-19', name:'छत्रपती शिवाजी महाराज जयंती', day:'गुरुवार', type:'regional' },
+  { date:'2026-03-03', name:'होळी (धुळवड – दुसरा दिवस)', day:'मंगळवार', type:'regional' },
+  { date:'2026-03-19', name:'गुढीपाडवा', day:'गुरुवार', type:'regional' },
+  { date:'2026-03-21', name:'रमजान ईद (ईद-उल-फित्र)', day:'शनिवार', type:'regional' },
+  { date:'2026-03-26', name:'रामनवमी', day:'गुरुवार', type:'regional' },
+  { date:'2026-03-31', name:'महावीर जयंती', day:'मंगळवार', type:'regional' },
+  { date:'2026-04-03', name:'गुड फ्रायडे', day:'शुक्रवार', type:'national' },
+  { date:'2026-04-14', name:'डॉ. बाबासाहेब आंबेडकर जयंती', day:'मंगळवार', type:'national' },
+  { date:'2026-05-01', name:'महाराष्ट्र दिन / बुद्ध पौर्णिमा / कामगार दिन', day:'शुक्रवार', type:'national' },
+  { date:'2026-05-28', name:'बकरी ईद (ईद-उल-जुहा)', day:'गुरुवार', type:'regional' },
+  { date:'2026-06-26', name:'मोहरम', day:'शुक्रवार', type:'regional' },
+  // ===== जुलै – डिसेंबर २०२६ =====
+  // Ref: महाराष्ट्र शासन – GAD अधिसूचना, डिसेंबर ५, २०२५ (पुढील वर्षाच्या सुट्ट्या)
+  { date:'2026-08-15', name:'स्वातंत्र्य दिन', day:'शनिवार', type:'national' },
+  { date:'2026-08-15', name:'पारशी नववर्ष (शहेनशाही)', day:'शनिवार', type:'regional' },
+  { date:'2026-08-26', name:'ईद-ए-मिलाद (पैगंबर जयंती)', day:'बुधवार', type:'regional' },
+  { date:'2026-09-14', name:'गणेश चतुर्थी', day:'सोमवार', type:'regional' },
+  { date:'2026-10-02', name:'महात्मा गांधी जयंती', day:'शुक्रवार', type:'national' },
+  { date:'2026-10-20', name:'दसरा (विजयादशमी)', day:'मंगळवार', type:'regional' },
+  { date:'2026-11-08', name:'दिवाळी – लक्ष्मीपूजन', day:'रविवार', type:'regional' },
+  { date:'2026-11-10', name:'दिवाळी – बळी प्रतिपदा', day:'मंगळवार', type:'regional' },
+  { date:'2026-11-11', name:'दिवाळी – भाऊबीज (अतिरिक्त सुट्टी)', day:'बुधवार', type:'regional' },
+  { date:'2026-11-24', name:'गुरुनानक जयंती', day:'मंगळवार', type:'regional' },
+  { date:'2026-12-25', name:'ख्रिसमस', day:'शुक्रवार', type:'national' },
+];
+
+// ===== BAMU ACADEMIC CALENDAR 2026-27 PRE-POPULATED EVENTS =====
+// Ref: डॉ. बाबासाहेब आंबेडकर मराठवाडा विद्यापीठ, छत्रपती संभाजीनगर – शैक्षणिक वर्ष २०२६-२७ (Official Academic Calendar)
+const BAMU_EVENTS = [
+
+  // ===== पहिले सत्र (First Term) =====
+  { id:'bamu-ft-1', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'सर्व संलग्न महाविद्यालये व मान्यताप्राप्त संस्था उघडण्याची तारीख', evdate:'2026-06-15', evdate2:'', evtime:'', evplace:'सर्व संलग्न महाविद्यालये', evdesc:'Opening date of all affiliated colleges and recognized institutions – 15/06/2026', evby:'BAMU', isGovt:true },
+  { id:'bamu-ft-2', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'पहिले सत्र (दोन्ही दिवस समावेश)', evdate:'2026-06-15', evdate2:'2026-12-15', evtime:'', evplace:'सर्व संलग्न महाविद्यालये', evdesc:'First Term (Both days inclusive) – 15/06/2026 to 15/12/2026', evby:'BAMU', isGovt:true },
+  { id:'bamu-ft-3', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'UG अभ्यासक्रमांसाठी प्रवेश प्रक्रिया कालावधी', evdate:'2026-06-15', evdate2:'2026-06-30', evtime:'', evplace:'', evdesc:'Period of Admission Process for All U.G. Courses – 15/06/2026 to 30/06/2026', evby:'BAMU प्रवेश कक्ष', isGovt:true },
+  { id:'bamu-ft-4', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'PG अभ्यासक्रमांसाठी प्रवेश प्रक्रिया कालावधी', evdate:'2026-06-15', evdate2:'2026-07-15', evtime:'', evplace:'', evdesc:'Period of Admission Process for P.G. Courses – 15/06/2026 to 15/07/2026', evby:'BAMU प्रवेश कक्ष', isGovt:true },
+  { id:'bamu-ft-5', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'प्रवेशाची अंतिम तारीख (व्यावसायिक अभ्यासक्रम वगळता UG & PG)', evdate:'2026-07-31', evdate2:'', evtime:'', evplace:'', evdesc:'Last date of Admission (Excluding professional Courses UG & PG) – 31/07/2026', evby:'BAMU प्रवेश कक्ष', isGovt:true },
+  { id:'bamu-ft-6', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'पहिले सत्र – प्रभावी शिक्षण कालावधी (UG)', evdate:'2026-07-01', evdate2:'2026-10-19', evtime:'', evplace:'महाविद्यालये', evdesc:'First Term Effective Teaching Period (Both days inclusive) UG Courses – 01/07/2026 to 19/10/2026', evby:'BAMU – शैक्षणिक विभाग', isGovt:true },
+  { id:'bamu-ft-7', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'पहिले सत्र – प्रभावी शिक्षण कालावधी (PG)', evdate:'2026-07-16', evdate2:'2026-11-04', evtime:'', evplace:'महाविद्यालये', evdesc:'First Term Effective Teaching Period (Both days inclusive) P.G. Courses – 16/07/2026 to 04/11/2026', evby:'BAMU – शैक्षणिक विभाग', isGovt:true },
+  { id:'bamu-ft-8', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'विद्यापीठ स्थापना दिन (University Foundation Day)', evdate:'2026-08-23', evdate2:'', evtime:'', evplace:'विद्यापीठ परिसर, छत्रपती संभाजीनगर', evdesc:'University Foundation Day – 23/08/2026. डॉ. बाबासाहेब आंबेडकर मराठवाडा विद्यापीठ स्थापना दिन.', evby:'BAMU', isGovt:true },
+  { id:'bamu-ft-9', dept:'BAMU – विद्यापीठ', evtype:'exam', evname:'सतत अंतर्गत मूल्यमापन (CIA)', evdate:'2026-07-01', evdate2:'2026-12-15', evtime:'', evplace:'', evdesc:'Continuous Internal Assessment (CIA) – Any day of the week as per scheme of Examination Guidelines', evby:'BAMU परीक्षा विभाग', isGovt:true },
+  { id:'bamu-ft-10', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'पात्रता फॉर्म सादरीकरण – महाविद्यालयांनी विद्यापीठाला', evdate:'2026-07-31', evdate2:'', evtime:'', evplace:'', evdesc:'Submission of Eligibility Forms by the students at college and Recognized Institutions – 31/07/2026', evby:'BAMU', isGovt:true },
+  { id:'bamu-ft-11', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'पात्रता फॉर्म अंतिम सादरीकरण – विद्यापीठाला', evdate:'2026-08-10', evdate2:'', evtime:'', evplace:'', evdesc:'Last date for submission of Eligibility Forms by All Affiliated Colleges and Recognized Institutions to the University – 10/08/2026', evby:'BAMU', isGovt:true },
+  { id:'bamu-ft-12', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'अविष्कार (विद्यापीठ स्तर)', evdate:'2026-09-29', evdate2:'2026-09-30', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Avishkar (University Level) – 29-30th September, 2026', evby:'BAMU', isGovt:true },
+  { id:'bamu-ft-13', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'युवा महोत्सव (Youth Festival)', evdate:'2026-10-05', evdate2:'2026-10-08', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Youth Festival – 5-8th October, 2026', evby:'BAMU', isGovt:true },
+  { id:'bamu-ft-14', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'दीक्षांत समारंभ (Convocation Ceremony)', evdate:'2026-10-01', evdate2:'2026-10-31', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Convocation Ceremony – October, 2026', evby:'BAMU Registrar', isGovt:true },
+  { id:'bamu-ft-15', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'सत्रांत परीक्षा कालावधी – UG अभ्यासक्रम', evdate:'2026-10-21', evdate2:'2026-12-15', evtime:'', evplace:'विद्यापीठ परीक्षा केंद्रे', evdesc:'Period of Term End Examination (for U.G. Courses) – 21/10/2026 to 15/12/2026', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'bamu-ft-16', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'सत्रांत परीक्षा कालावधी – PG अभ्यासक्रम', evdate:'2026-11-25', evdate2:'2026-12-15', evtime:'', evplace:'विद्यापीठ परीक्षा केंद्रे', evdesc:'Period of Term End Examination (for P.G. Courses) – 25/11/2026 to 15/12/2026', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'bamu-ft-17', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'निकाल जाहीर', evdate:'2027-01-15', evdate2:'', evtime:'', evplace:'', evdesc:'Declaration of Result – 15/01/2027', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'bamu-ft-18', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'हिवाळी सुट्टी (दोन्ही दिवस समावेश)', evdate:'2026-11-05', evdate2:'2026-11-24', evtime:'', evplace:'', evdesc:'Winter Vacation (Both days inclusive) – 05/11/2026 to 24/11/2026', evby:'BAMU', isGovt:true },
+
+  // ===== दुसरे सत्र (Second Term) =====
+  { id:'bamu-st-1', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'दुसरे सत्र (दोन्ही दिवस समावेश)', evdate:'2026-12-16', evdate2:'2027-04-25', evtime:'', evplace:'सर्व संलग्न महाविद्यालये', evdesc:'Second Term (Both days inclusive) – 16/12/2026 to 25/04/2027', evby:'BAMU', isGovt:true },
+  { id:'bamu-st-2', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'हिवाळी सुट्टीनंतर महाविद्यालये सुरू होण्याचा दिवस', evdate:'2026-11-25', evdate2:'', evtime:'', evplace:'सर्व संलग्न महाविद्यालये', evdesc:'Commencement day of all Affiliated Colleges and recognized Institutions after availed of winter vacation – 25/11/2026', evby:'BAMU', isGovt:true },
+  { id:'bamu-st-3', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'नामविस्तार दिन (Namvistar Din)', evdate:'2027-01-14', evdate2:'', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Namvistar Din – 14/01/2027', evby:'BAMU', isGovt:true },
+  { id:'bamu-st-4', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'दुसरे सत्र – प्रभावी शिक्षण कालावधी (UG & PG)', evdate:'2026-12-16', evdate2:'2027-04-08', evtime:'', evplace:'महाविद्यालये', evdesc:'Second Term Effective Teaching Period (Both days inclusive) U.G. & P.G. – 16/12/2026 to 08/04/2027', evby:'BAMU – शैक्षणिक विभाग', isGovt:true },
+  { id:'bamu-st-5', dept:'BAMU – विद्यापीठ', evtype:'exam', evname:'सतत अंतर्गत मूल्यमापन (CIA) – दुसरे सत्र', evdate:'2026-12-16', evdate2:'2027-04-25', evtime:'', evplace:'', evdesc:'Continuous Internal Assessment (CIA) – Any day of the week as per scheme of Examination Guidelines', evby:'BAMU परीक्षा विभाग', isGovt:true },
+  { id:'bamu-st-6', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'लोककला महोत्सव (Lokkala Mohatsva)', evdate:'2027-01-12', evdate2:'2027-01-13', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Lokkala Mohatsva – 12-13 January, 2027', evby:'BAMU', isGovt:true },
+  { id:'bamu-st-7', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'सत्रांत परीक्षा कालावधी (UG & PG)', evdate:'2027-04-09', evdate2:'2027-05-19', evtime:'', evplace:'विद्यापीठ परीक्षा केंद्रे', evdesc:'Period of Term End Examination (U.G. & P.G.) – 09/04/2027 to 19/05/2027', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'bamu-st-8', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'निकाल जाहीर (UG & PG)', evdate:'2027-06-20', evdate2:'', evtime:'', evplace:'', evdesc:'Declaration of Result (U.G. & P.G.) – 20/06/2027', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'bamu-st-9', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'उन्हाळी सुट्टी (दोन्ही दिवस समावेश)', evdate:'2027-04-26', evdate2:'2027-06-14', evtime:'', evplace:'', evdesc:'Summer Vacation (Both days inclusive) – 26/04/2027 to 14/06/2027', evby:'BAMU', isGovt:true },
+  { id:'bamu-st-10', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'शैक्षणिक वर्ष २०२७-२८ सुरुवातीचा दिवस', evdate:'2027-06-15', evdate2:'', evtime:'', evplace:'सर्व संलग्न महाविद्यालये', evdesc:'Commencement day of the academic year 2027-2028 – 15/06/2027', evby:'BAMU', isGovt:true },
+
+  // ===== शैक्षणिक वर्ष २०२५-२६ च्या BAMU नोंदी =====
+  // Ref: Dr. BAMU Tentative Academic Programme 2025-26
+
+  // प्रवेश प्रक्रिया
+  { id:'ay25-1', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'प्रवेश प्रक्रिया सुरुवात UG/PG (२०२५-२६)', evdate:'2025-07-01', evdate2:'2025-07-19', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'UG/PG ऑनलाइन नोंदणी – अंतिम तारीख: १९ जुलै २०२५. (bamuadm.samarth.edu.in)', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'ay25-2', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'सर्वसाधारण गुणवत्ता यादी जाहीर', evdate:'2025-07-28', evdate2:'', evtime:'', evplace:'', evdesc:'General Merit List Declaration AY 2025-26', evby:'BAMU प्रवेश कक्ष', isGovt:true },
+  { id:'ay25-3', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'पहिली गुणवत्ता यादी व प्रवेश', evdate:'2025-08-04', evdate2:'2025-08-07', evtime:'', evplace:'', evdesc:'First Merit List Admission – 4 ते 7 ऑगस्ट 2025', evby:'BAMU प्रवेश कक्ष', isGovt:true },
+  { id:'ay25-4', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'दुसरी गुणवत्ता यादी व प्रवेश', evdate:'2025-08-09', evdate2:'2025-08-14', evtime:'', evplace:'', evdesc:'Second Merit List Admission – 9 ते 14 ऑगस्ट 2025', evby:'BAMU प्रवेश कक्ष', isGovt:true },
+  { id:'ay25-5', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'स्पॉट प्रवेश (रिक्त जागांसाठी)', evdate:'2025-08-18', evdate2:'', evtime:'', evplace:'', evdesc:'Spot Admission Against Vacant Seats', evby:'BAMU प्रवेश कक्ष', isGovt:true },
+
+  // विषम सत्र २०२५
+  { id:'ay25-6', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'सत्र वर्ग प्रारंभ (NEP/CBCGS)', evdate:'2025-08-11', evdate2:'', evtime:'', evplace:'महाविद्यालये', evdesc:'Commencement of First Semester Classes – 11 August 2025', evby:'BAMU – शैक्षणिक विभाग', isGovt:true },
+  { id:'ay25-7', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'विषम सत्र परीक्षा अर्ज सादरीकरण', evdate:'2025-09-15', evdate2:'2025-10-15', evtime:'', evplace:'', evdesc:'Examination Form Submission for Nov/Dec 2025 UG & PG Examinations', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'ay25-8', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'विषम सत्र परीक्षा UG/PG (Nov/Dec 2025)', evdate:'2025-11-17', evdate2:'2025-12-20', evtime:'', evplace:'विद्यापीठ परीक्षा केंद्रे', evdesc:'BAMU UG/PG Odd Semester (I, III, V sem) Theory Examinations – Nov/Dec 2025. NEP Pattern 2024 & CBCGS Pattern 2022', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'ay25-9', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'NSS/NCC/क्रीडा परीक्षा अर्ज', evdate:'2025-09-20', evdate2:'2025-10-10', evtime:'', evplace:'', evdesc:'NSS, NCC, Sports & Cultural Students Application for Nov/Dec 2025 UG & PG Examinations', evby:'परीक्षा विभाग, BAMU', isGovt:true },
+
+  // विशेष दिन २०२५
+  { id:'ay25-10', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'BAMU स्थापना दिन ६७ वा', evdate:'2025-08-23', evdate2:'', evtime:'', evplace:'विद्यापीठ परिसर, छत्रपती संभाजीनगर', evdesc:'डॉ. BAMU चा ६७वा स्थापना दिन – स्थापना: २३ ऑगस्ट १९५८', evby:'BAMU', isGovt:true },
+  { id:'ay25-11', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'IQAC-AAA लेखापरीक्षण २०२५-२६', evdate:'2025-10-01', evdate2:'2025-12-31', evtime:'', evplace:'', evdesc:'Academic and Administrative Audit 2025-26 (BAMU IQAC)', evby:'IQAC, BAMU', isGovt:true },
+  { id:'ay25-12', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'अविष्कार – विद्यापीठ स्तर (२०२५)', evdate:'2025-09-29', evdate2:'2025-09-30', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Avishkar University Level – Sept 2025', evby:'BAMU', isGovt:true },
+  { id:'ay25-13', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'युवा महोत्सव (२०२५)', evdate:'2025-10-05', evdate2:'2025-10-08', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Youth Festival – Oct 2025', evby:'BAMU', isGovt:true },
+  { id:'ay25-14', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'दीक्षांत समारंभ (Convocation 2025)', evdate:'2025-11-01', evdate2:'', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'66th Convocation Ceremony – Nov 2025', evby:'BAMU Registrar', isGovt:true },
+
+  // सम सत्र २०२६
+  { id:'ay25-15', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'लोककला महोत्सव (२०२५-२६)', evdate:'2026-01-12', evdate2:'2026-01-13', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Lokkala Mohatsva – Jan 2026', evby:'BAMU', isGovt:true },
+  { id:'ay25-16', dept:'BAMU – विद्यापीठ', evtype:'cultural', evname:'नामविस्तार दिन (२०२५-२६)', evdate:'2026-01-14', evdate2:'', evtime:'', evplace:'विद्यापीठ परिसर', evdesc:'Namvistar Din – 14 Jan 2026', evby:'BAMU', isGovt:true },
+  { id:'ay25-17', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'सम सत्र परीक्षा अर्ज सादरीकरण', evdate:'2026-01-15', evdate2:'2026-02-15', evtime:'', evplace:'', evdesc:'Examination Form Submission for March/April 2026 UG & PG Examinations', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'ay25-18', dept:'BAMU – विद्यापीठ', evtype:'univ-exam', evname:'सम सत्र परीक्षा UG/PG (Mar–May 2026)', evdate:'2026-03-23', evdate2:'2026-05-20', evtime:'', evplace:'विद्यापीठ परीक्षा केंद्रे', evdesc:'BAMU UG/PG Even Semester Theory Examinations – March/April/May 2026. NEP Pattern 2024, CBCGS P-2022', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+
+  // निकाल २०२५-२६
+  { id:'ay25-19', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'विषम सत्र निकाल (Nov/Dec 2025)', evdate:'2026-02-01', evdate2:'2026-03-01', evtime:'', evplace:'', evdesc:'Result declaration for Nov/Dec 2025 odd semester exams. bamuaresult.digitaluniversity.ac', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'ay25-20', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'पुनर्मूल्यांकन अर्ज (Redressal)', evdate:'2026-02-16', evdate2:'2026-02-25', evtime:'', evplace:'E-Suvidha Portal', evdesc:'Revaluation/rechecking within 10 days of result via E-Suvidha. Fee: Rs.100/subject.', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+  { id:'ay25-21', dept:'BAMU – विद्यापीठ', evtype:'committee', evname:'सम सत्र निकाल (Apr/May 2026)', evdate:'2026-06-15', evdate2:'2026-07-15', evtime:'', evplace:'', evdesc:'Result declaration for April/May 2026 even semester exams.', evby:'परीक्षा व मूल्यांकन मंडळ, BAMU', isGovt:true },
+
+];
+
+const COLORS = {
+  holiday:'#C0392B', exam:'#6C3483', 'univ-exam':'#0E7490',
+  cultural:'#FF6B00', sports:'#1A7A4A', committee:'#D4A017',
+  dept:'#2563EB', meeting:'#374151', other:'#94A3B8'
+};
+const LABELS = {
+  holiday:'🔴 सार्व. सुट्टी', exam:'🟣 अंतर्गत परीक्षा', 'univ-exam':'🔵 विद्यापीठ परीक्षा',
+  cultural:'🟠 सांस्कृतिक', sports:'🟢 क्रीडा', committee:'🟡 समिती',
+  dept:'🩵 विभागीय', meeting:'⚫ सभा', other:'⬜ इतर'
+};
+const MONTHS_MR = ['जानेवारी','फेब्रुवारी','मार्च','एप्रिल','मे','जून','जुलै','ऑगस्ट','सप्टेंबर','ऑक्टोबर','नोव्हेंबर','डिसेंबर'];
+
+// ============================================================
+//  GOOGLE SHEETS INTEGRATION — GKVM Academic Calendar 2026-27
+//  Setup Instructions (खाली वाचा):
+//
+//  STEP 1: Google Sheets उघडा आणि खालील 2 sheets बनवा:
+//          Sheet1 नाव:  "Events"
+//          Sheet2 नाव:  "Passwords"
+//
+//  STEP 2: Extensions → Apps Script → खालील code paste करा
+//          आणि Deploy → New Deployment → Web App करा.
+//          "Execute as: Me", "Access: Anyone" निवडा.
+//
+//  STEP 3: Deployment URL खाली SCRIPT_URL मध्ये paste करा.
+//
+//  Apps Script Code (Google Script Editor मध्ये paste करा):
+/*
+const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';  // Sheet URL मधील ID
+
+function doGet(e) {
+  const sheet = SpreadsheetApp.openById(SHEET_ID);
+  const action = e.parameter.action;
+  if (action === 'getEvents') {
+    const data = sheet.getSheetByName('Events').getDataRange().getValues();
+    return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+  }
+  if (action === 'getPasswords') {
+    const data = sheet.getSheetByName('Passwords').getDataRange().getValues();
+    return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+  }
+  return ContentService.createTextOutput('{"error":"unknown action"}').setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  const sheet = SpreadsheetApp.openById(SHEET_ID);
+  const body = JSON.parse(e.postData.contents);
+  const action = body.action;
+
+  if (action === 'saveEvent') {
+    const ev = body.event;
+    const s = sheet.getSheetByName('Events');
+    s.appendRow([ev.id, ev.dept, ev.evtype, ev.evname, ev.evdate, ev.evdate2||'', ev.evtime||'', ev.evplace||'', ev.evdesc||'', ev.evby||'', ev.createdAt||'', 'false']);
+    return ContentService.createTextOutput('{"status":"ok"}').setMimeType(ContentService.MimeType.JSON);
+  }
+  if (action === 'deleteEvent') {
+    const s = sheet.getSheetByName('Events');
+    const data = s.getDataRange().getValues();
+    for (let i = data.length - 1; i >= 0; i--) {
+      if (String(data[i][0]) === String(body.id)) { s.deleteRow(i + 1); break; }
+    }
+    return ContentService.createTextOutput('{"status":"ok"}').setMimeType(ContentService.MimeType.JSON);
+  }
+  if (action === 'savePassword') {
+    const p = body.pwd;
+    const s = sheet.getSheetByName('Passwords');
+    const data = s.getDataRange().getValues();
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][0] === p.dept) {
+        s.getRange(i+1,1,1,6).setValues([[p.dept,p.teacherName||'',p.password,p.active?'true':'false',p.createdAt||'',p.lastChanged||'']]);
+        return ContentService.createTextOutput('{"status":"updated"}').setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+    s.appendRow([p.dept, p.teacherName||'', p.password, p.active?'true':'false', p.createdAt||'', p.lastChanged||'']);
+    return ContentService.createTextOutput('{"status":"added"}').setMimeType(ContentService.MimeType.JSON);
+  }
+  if (action === 'deletePassword') {
+    const s = sheet.getSheetByName('Passwords');
+    const data = s.getDataRange().getValues();
+    for (let i = data.length - 1; i >= 0; i--) {
+      if (data[i][0] === body.dept) { s.deleteRow(i + 1); break; }
+    }
+    return ContentService.createTextOutput('{"status":"ok"}').setMimeType(ContentService.MimeType.JSON);
+  }
+  if (action === 'saveAdminCreds') {
+    const s = sheet.getSheetByName('Passwords');
+    const adminRow = ['__ADMIN__', body.user||'admin', body.pass||'admin123', 'true', '', ''];
+    const data = s.getDataRange().getValues();
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][0] === '__ADMIN__') { s.getRange(i+1,1,1,6).setValues([adminRow]); return ContentService.createTextOutput('{"status":"ok"}').setMimeType(ContentService.MimeType.JSON); }
+    }
+    s.appendRow(adminRow);
+    return ContentService.createTextOutput('{"status":"ok"}').setMimeType(ContentService.MimeType.JSON);
+  }
+  return ContentService.createTextOutput('{"error":"unknown"}').setMimeType(ContentService.MimeType.JSON);
+}
+*/
+// ============================================================
+
+// ▼▼▼ इथे तुमचा Apps Script Deployment URL paste करा ▼▼▼
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykBoY1d7gWqzDDKnJ_YbFEvULIQ5xJmGNzw7wVaq7T8FYdhLVQQy5cr6jVmHlrZkGbqw/exec';
+// ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+// ===== GOOGLE SHEETS API LAYER =====
+let _sheetsReady = false;
+let _loadingEvents = false;
+
+async function gsGet(params) {
+  const url = SCRIPT_URL + '?' + new URLSearchParams(params);
+  const resp = await fetch(url, {
+    method: 'GET',
+    redirect: 'follow'
+  });
+  const text = await resp.text();
+  return JSON.parse(text);
+}
+
+async function gsPost(body) {
+  // no-cors mode used to avoid CORS preflight issues with Apps Script
+  await fetch(SCRIPT_URL, {
+    method: 'POST',
+    redirect: 'follow',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(body)
+  });
+  return { status: 'ok' };
+}
+
+// ===== DATA LAYER: Events =====
+let userEvents = [];
+
+async function loadEventsFromSheets() {
+  if (_loadingEvents) return;
+  _loadingEvents = true;
+  try {
+    showToast('⏳ Google Sheets मधून data लोड होत आहे...', '');
+    const rows = await gsGet({ action: 'getEvents' });
+    userEvents = [];
+    for (let i = 1; i < rows.length; i++) {
+      const r = rows[i];
+      if (!r[0]) continue;
+      userEvents.push({
+        id: r[0], dept: r[1], evtype: r[2], evname: r[3],
+        evdate: r[4], evdate2: r[5], evtime: r[6],
+        evplace: r[7], evdesc: r[8], evby: r[9],
+        createdAt: r[10], isGovt: false
+      });
+    }
+    renderPreviewList();
+    renderCalendar();
+    showToast('✅ Data लोड झाला! (' + userEvents.length + ' नोंदी)', 'success');
+  } catch(e) {
+    showToast('❌ Sheets connect होत नाही. SCRIPT_URL तपासा.', 'error');
+  }
+  _loadingEvents = false;
+}
+
+async function save() {
+  // Events आधीच gsPost मधून save होतात — हे function backward compat साठी आहे
+}
+
+async function saveEventToSheets(ev) {
+  try {
+    await gsPost({ action: 'saveEvent', event: ev });
+    showToast('✅ Google Sheets मध्ये जतन झाले!', 'success');
+  } catch(e) {
+    showToast('❌ Save अयशस्वी! Internet तपासा.', 'error');
+  }
+}
+
+async function deleteEventFromSheets(id) {
+  try {
+    await gsPost({ action: 'deleteEvent', id: id });
+  } catch(e) {
+    showToast('❌ Delete अयशस्वी!', 'error');
+  }
+}
+
+// ===== DATA LAYER: Passwords =====
+let teacherPasswords = [];
+let _adminUser = 'admin';
+let _adminPass = 'admin123';
+
+async function loadPasswordsFromSheets() {
+  try {
+    const rows = await gsGet({ action: 'getPasswords' });
+    teacherPasswords = [];
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i];
+      if (!r[0]) continue;
+      if (r[0] === '__ADMIN__') {
+        _adminUser = r[1] || 'admin';
+        _adminPass = r[2] || 'admin123';
+        continue;
+      }
+      teacherPasswords.push({
+        dept: r[0], teacherName: r[1], password: r[2],
+        active: r[3] === 'true', createdAt: r[4], lastChanged: r[5]
+      });
+    }
+    renderPasswordManager();
+  } catch(e) {
+    console.warn('Password load failed:', e);
+  }
+}
+
+function getAdminPassword() { return _adminPass; }
+function getAdminUsername() { return _adminUser; }
+
+async function savePwd() {
+  // passwords gsPost मधून individually save होतात
+}
+
+async function savePasswordToSheets(p) {
+  await gsPost({ action: 'savePassword', pwd: p });
+}
+
+async function deletePasswordFromSheets(dept) {
+  await gsPost({ action: 'deletePassword', dept: dept });
+}
+
+async function saveAdminCredsToSheets() {
+  await gsPost({ action: 'saveAdminCreds', user: _adminUser, pass: _adminPass });
+}
+
+// Default: show today's month if within academic range (Jul 2025 – Jun 2027), else Jul 2025
+const _today = new Date();
+const _ty = _today.getFullYear(), _tm = _today.getMonth();
+const _inRange = (_ty > 2025 || (_ty === 2025 && _tm >= 6)) && (_ty < 2027 || (_ty === 2027 && _tm <= 5));
+let currentMonth = _inRange ? _tm : 6;
+let currentYear  = _inRange ? _ty : 2025;
+
+// ===== PASSWORD SYSTEM =====
+const DEFAULT_ADMIN_PASS = 'admin123';
+const DEFAULT_ADMIN_USER = 'admin';
+
+// ===== ENTRY SECTION LOGIN =====
+let entryLoggedIn = false;
+let entryLoggedDept = '';
+
+function toggleEntryLoginCustomDept(sel){
+  const customInp = document.getElementById('entryLoginDeptCustom');
+  if(sel.value === '__other__'){
+    customInp.style.display = 'block';
+    customInp.focus();
+  } else {
+    customInp.style.display = 'none';
+    customInp.value = '';
+  }
+}
+
+function entryLogin(){
+  const selVal = document.getElementById('entryLoginDept').value.trim();
+  const customVal = document.getElementById('entryLoginDeptCustom').value.trim();
+  const dept = selVal === '__other__' ? customVal : selVal;
+  const pass = document.getElementById('entryLoginPass').value;
+  if(!selVal){ showToast('❌ कृपया विभाग निवडा!','error'); return; }
+  if(selVal === '__other__' && !customVal){ showToast('❌ कृपया विभागाचे नाव लिहा!','error'); return; }
+  if(!pass){ showToast('❌ संकेतशब्द टाका!','error'); return; }
+  const record = teacherPasswords.find(t => t.dept === dept && t.active);
+  if(!record){ showToast('❌ या विभागासाठी संकेतशब्द नोंदणी नाही. प्रशासकांशी संपर्क करा.','error'); return; }
+  if(record.password !== pass){ showToast('❌ चुकीचा संकेतशब्द!','error'); return; }
+  entryLoggedIn = true;
+  entryLoggedDept = dept;
+  document.getElementById('entryLocked').style.display = 'none';
+  document.getElementById('entryUnlocked').style.display = 'block';
+  const teacherName = record.teacherName ? ` — ${record.teacherName}` : '';
+  document.getElementById('entryWelcomeText').innerHTML = `<strong>${dept}</strong>${teacherName} | नोंदणी प्रणालीत स्वागत आहे`;
+  document.getElementById('entryDeptLabel').textContent = dept;
+  // Auto-select dept in the form
+  const deptSel = document.getElementById('dept');
+  let found = false;
+  for(let opt of deptSel.options){ if(opt.value === dept || opt.text === dept){ opt.selected = true; found = true; break; } }
+  if(!found){ deptSel.value = '__other__'; document.getElementById('deptCustom').value = dept; document.getElementById('deptCustom').style.display='block'; }
+  document.getElementById('evdate').value = new Date().toISOString().split('T')[0];
+  showToast(`✅ ${dept} – लॉगिन यशस्वी!`,'success');
+}
+
+function entryLogout(){
+  entryLoggedIn = false;
+  entryLoggedDept = '';
+  document.getElementById('entryLocked').style.display = 'block';
+  document.getElementById('entryUnlocked').style.display = 'none';
+  document.getElementById('entryLoginPass').value = '';
+  document.getElementById('entryLoginDept').value = '';
+  const customInp = document.getElementById('entryLoginDeptCustom');
+  customInp.value = '';
+  customInp.style.display = 'none';
+  showToast('🔒 बाहेर पडलात.','');
+}
+
+// ===== PASSWORD MANAGER =====
+function checkPwdStrength(pwd, fillId, labelId){
+  const fill = document.getElementById(fillId);
+  const label = document.getElementById(labelId);
+  if(!fill || !label) return;
+  let score = 0;
+  if(pwd.length >= 6) score++;
+  if(pwd.length >= 10) score++;
+  if(/[A-Z]/.test(pwd)) score++;
+  if(/[0-9]/.test(pwd)) score++;
+  if(/[^A-Za-z0-9]/.test(pwd)) score++;
+  const levels = [
+    {w:'0%',bg:'#EF4444',text:''},
+    {w:'20%',bg:'#EF4444',text:'❌ अतिशय कमकुवत'},
+    {w:'40%',bg:'#F97316',text:'⚠️ कमकुवत'},
+    {w:'60%',bg:'#EAB308',text:'🟡 मध्यम'},
+    {w:'80%',bg:'#22C55E',text:'✅ चांगला'},
+    {w:'100%',bg:'#16A34A',text:'🔒 उत्तम'}
+  ];
+  fill.style.width = levels[score].w;
+  fill.style.background = levels[score].bg;
+  label.textContent = levels[score].text;
+  label.style.color = levels[score].bg;
+}
+
+function toggleNewDeptCustom(sel){
+  const c = document.getElementById('newTeacherDeptCustom');
+  c.style.display = sel.value === '__custom__' ? 'block' : 'none';
+  if(sel.value === '__custom__') c.focus();
+  else c.value = '';
+}
+
+function addTeacherPassword(){
+  const selVal = document.getElementById('newTeacherDept').value;
+  let dept = selVal === '__custom__' ? document.getElementById('newTeacherDeptCustom').value.trim() : selVal;
+  const teacherName = document.getElementById('newTeacherName').value.trim();
+  const pass = document.getElementById('newTeacherPass').value;
+  if(!dept){ showToast('❌ विभाग निवडा किंवा लिहा!','error'); return; }
+  if(!pass || pass.length < 4){ showToast('❌ किमान ४ अक्षरांचा संकेतशब्द द्या!','error'); return; }
+  if(teacherPasswords.find(t => t.dept === dept)){
+    showToast('⚠️ हा विभाग आधीच नोंदणी आहे. खालून संपादित करा.','error'); return;
+  }
+  const newPwd = { dept, teacherName, password: pass, active: true, createdAt: new Date().toLocaleDateString('mr-IN'), lastChanged: new Date().toLocaleDateString('mr-IN') };
+  teacherPasswords.push(newPwd);
+  savePasswordToSheets(newPwd);
+  // Reset form
+  document.getElementById('newTeacherDept').value = '';
+  document.getElementById('newTeacherDeptCustom').value = '';
+  document.getElementById('newTeacherDeptCustom').style.display = 'none';
+  document.getElementById('newTeacherName').value = '';
+  document.getElementById('newTeacherPass').value = '';
+  document.getElementById('newStrengthFill').style.width = '0%';
+  document.getElementById('newStrengthLabel').textContent = '';
+  renderPasswordManager();
+  showToast(`✅ ${dept} – संकेतशब्द जोडला!`,'success');
+}
+
+function renderPasswordManager(){
+  updateAdminCredInfo();
+  const search = (document.getElementById('pwdSearch')?.value || '').toLowerCase();
+  const filter = document.getElementById('pwdFilter')?.value || '';
+  let list = teacherPasswords.filter(t =>
+    (!search || t.dept.toLowerCase().includes(search) || (t.teacherName||'').toLowerCase().includes(search)) &&
+    (!filter || (filter==='active' ? t.active : !t.active))
+  );
+  document.getElementById('pwdTotalCount').textContent = teacherPasswords.length;
+  const grid = document.getElementById('teacherPasswordGrid');
+  if(!list.length){
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔑</div><p>कोणताही विभाग आढळला नाही.</p></div>';
+    return;
+  }
+  grid.innerHTML = list.map((t, i) => {
+    const idx = teacherPasswords.indexOf(t);
+    const maskedPass = '●'.repeat(Math.min(t.password.length, 10));
+    return `<div class="pwd-card">
+      <div class="pwd-card-head">
+        <div style="font-size:1.1rem;">🏛️</div>
+        <div class="dept-name">${t.dept}${t.teacherName ? ` <span style="opacity:0.7;font-weight:400;font-size:0.82rem;">— ${t.teacherName}</span>` : ''}</div>
+        <span class="dept-badge">${t.active ? '✅ सक्रिय' : '❌ निष्क्रिय'}</span>
+      </div>
+      <div class="pwd-card-body">
+        <div class="pwd-display" id="pwdDisp_${idx}">${maskedPass}</div>
+        <div class="pwd-actions">
+          <button class="btn-icon" title="पाहा/लपवा" onclick="togglePwdReveal(${idx})" id="pwdEyeBtn_${idx}">👁️</button>
+          <button class="btn-icon" title="संपादित करा" onclick="togglePwdEdit(${idx})" id="pwdEditBtn_${idx}">✏️</button>
+          <button class="btn-icon" title="${t.active ? 'निष्क्रिय करा' : 'सक्रिय करा'}" onclick="togglePwdActive(${idx})" style="color:${t.active?'#DC2626':'#16A34A'};">${t.active ? '🚫' : '✅'}</button>
+          <button class="btn-icon" title="हटवा" onclick="deleteTeacherPassword(${idx})" style="color:#DC2626;">🗑️</button>
+        </div>
+        <div class="pwd-status ${t.active ? 'active-status' : 'inactive-status'}" style="width:100%;">
+          🕐 तयार: ${t.createdAt} &nbsp;|&nbsp; शेवटचा बदल: ${t.lastChanged}
+        </div>
+      </div>
+      <div class="pwd-edit-row" id="pwdEditRow_${idx}">
+        <div class="form-group">
+          <label>नवीन संकेतशब्द</label>
+          <input type="password" id="pwdNewVal_${idx}" placeholder="नवीन संकेतशब्द..." oninput="checkPwdStrength(this.value,'editStr_${idx}','editStrLabel_${idx}')">
+          <div class="strength-bar"><div class="strength-fill" id="editStr_${idx}"></div></div>
+          <div class="strength-label" id="editStrLabel_${idx}"></div>
+        </div>
+        <div class="form-group">
+          <label>प्रतिनिधीचे नाव</label>
+          <input type="text" id="pwdNewName_${idx}" value="${t.teacherName||''}" placeholder="नाव...">
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;padding-bottom:2px;">
+          <button class="btn btn-primary btn-sm" onclick="saveTeacherEdit(${idx})">💾 जतन</button>
+          <button class="btn btn-secondary btn-sm" onclick="togglePwdEdit(${idx})">रद्द</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function togglePwdReveal(idx){
+  const disp = document.getElementById(`pwdDisp_${idx}`);
+  const t = teacherPasswords[idx];
+  if(!t) return;
+  if(disp.classList.contains('revealed')){ disp.textContent = '●'.repeat(Math.min(t.password.length,10)); disp.classList.remove('revealed'); }
+  else { disp.textContent = t.password; disp.classList.add('revealed'); }
+}
+
+function togglePwdEdit(idx){
+  const row = document.getElementById(`pwdEditRow_${idx}`);
+  if(row) row.classList.toggle('open');
+}
+
+function saveTeacherEdit(idx){
+  const newPass = document.getElementById(`pwdNewVal_${idx}`)?.value;
+  const newName = document.getElementById(`pwdNewName_${idx}`)?.value.trim();
+  if(newPass && newPass.length < 4){ showToast('❌ किमान ४ अक्षरांचा संकेतशब्द द्या!','error'); return; }
+  if(newPass) teacherPasswords[idx].password = newPass;
+  if(newName !== undefined) teacherPasswords[idx].teacherName = newName;
+  teacherPasswords[idx].lastChanged = new Date().toLocaleDateString('mr-IN');
+  savePasswordToSheets(teacherPasswords[idx]);
+  renderPasswordManager();
+  showToast(`✅ ${teacherPasswords[idx].dept} – अद्यतन केले!`,'success');
+}
+
+function togglePwdActive(idx){
+  teacherPasswords[idx].active = !teacherPasswords[idx].active;
+  savePasswordToSheets(teacherPasswords[idx]);
+  renderPasswordManager();
+  showToast(teacherPasswords[idx].active ? '✅ सक्रिय केले.' : '🚫 निष्क्रिय केले.','');
+}
+
+function deleteTeacherPassword(idx){
+  if(!confirm(`"${teacherPasswords[idx].dept}" चा संकेतशब्द कायमचा हटवायचा आहे का?`)) return;
+  const name = teacherPasswords[idx].dept;
+  deletePasswordFromSheets(name);
+  teacherPasswords.splice(idx,1);
+  renderPasswordManager();
+  showToast(`🗑️ ${name} – हटवले.`,'');
+}
+
+function changeAdminId(){
+  const verifyPass = document.getElementById('adminIdVerifyPass').value;
+  const newId = document.getElementById('adminNewId').value.trim();
+  const confirmId = document.getElementById('adminConfirmId').value.trim();
+  if(verifyPass !== getAdminPassword()){ showToast('❌ संकेतशब्द चुकीचा! पडताळणी अयशस्वी.','error'); return; }
+  if(!newId || newId.length < 3){ showToast('❌ किमान ३ अक्षरांची Admin ID द्या!','error'); return; }
+  if(newId !== confirmId){ showToast('❌ Admin ID जुळत नाही!','error'); return; }
+  _adminUser = newId;
+  saveAdminCredsToSheets();
+  document.getElementById('adminIdVerifyPass').value = '';
+  document.getElementById('adminNewId').value = '';
+  document.getElementById('adminConfirmId').value = '';
+  updateAdminCredInfo();
+  showToast(`✅ Admin ID यशस्वीपणे "${newId}" केली!`,'success');
+}
+
+function updateAdminCredInfo(){
+  const idEl = document.getElementById('currentAdminIdDisplay');
+  if(idEl) idEl.textContent = getAdminUsername();
+}
+
+function changeAdminPassword(){
+  const oldPass = document.getElementById('adminOldPass').value;
+  const newPass = document.getElementById('adminNewPass').value;
+  const confirmPass = document.getElementById('adminConfirmPass').value;
+  if(oldPass !== getAdminPassword()){ showToast('❌ सध्याचा संकेतशब्द चुकीचा!','error'); return; }
+  if(!newPass || newPass.length < 4){ showToast('❌ किमान ४ अक्षरांचा नवीन संकेतशब्द द्या!','error'); return; }
+  if(newPass !== confirmPass){ showToast('❌ नवीन संकेतशब्द जुळत नाहीत!','error'); return; }
+  _adminPass = newPass;
+  saveAdminCredsToSheets();
+  document.getElementById('adminOldPass').value = '';
+  document.getElementById('adminNewPass').value = '';
+  document.getElementById('adminConfirmPass').value = '';
+  document.getElementById('adminStrengthFill').style.width = '0%';
+  document.getElementById('adminStrengthLabel').textContent = '';
+  updateAdminCredInfo();
+  showToast('✅ प्रशासक संकेतशब्द यशस्वीपणे बदलला!','success');
+}
+
+function getAllEvents(){
+  const hols = GOVT_HOLIDAYS_AY.map((h,i)=>({
+    id:'h-'+i+'-'+h.date, dept:'महाराष्ट्र शासन (सामान्य प्रशासन विभाग)',
+    evtype:'holiday', evname:h.name, evdate:h.date, evdate2:'', evtime:'', evplace:'', evdesc:'अधिकृत सार्वजनिक सुट्टी', evby:'सामान्य प्रशासन विभाग', isGovt:true
+  }));
+  return [...hols, ...BAMU_EVENTS, ...userEvents];
+}
+
+// ===== NAV =====
+function showSection(name, el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+  if(name==='calendar') setTimeout(renderCalendar, 30);
+  if(name==='admin') renderAdminTable();
+}
+
+
+// ===== DEPT CUSTOM =====
+function toggleCustomDept(sel){
+  const custom = document.getElementById('deptCustom');
+  if(sel.value === '__other__'){
+    custom.style.display = 'block';
+    custom.focus();
+  } else {
+    custom.style.display = 'none';
+    custom.value = '';
+  }
+}
+function getDeptValue(){
+  const sel = document.getElementById('dept');
+  if(sel.value === '__other__'){
+    return document.getElementById('deptCustom').value.trim();
+  }
+  return sel.value;
+}
+
+// ===== ADD EVENT =====
+function addEvent(){
+  const dept=getDeptValue(), evtype=document.getElementById('evtype').value;
+  const evname=document.getElementById('evname').value.trim(), evdate=document.getElementById('evdate').value;
+  if(!dept||!evtype||!evname||!evdate){showToast('❌ कृपया सर्व आवश्यक माहिती भरा!','error');return;}
+  const ev={id:Date.now(),dept,evtype,evname,evdate,
+    evdate2:document.getElementById('evdate2').value,
+    evtime:document.getElementById('evtime').value,
+    evplace:document.getElementById('evplace').value.trim(),
+    evdesc:document.getElementById('evdesc').value.trim(),
+    evby:document.getElementById('evby').value.trim(),
+    createdAt:new Date().toLocaleDateString('mr-IN'),isGovt:false};
+  userEvents.push(ev);
+  renderPreviewList();
+  saveEventToSheets(ev);
+  ['evname','evdate','evdate2','evtime','evplace','evdesc','evby'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('dept').value='';
+  document.getElementById('deptCustom').value='';
+  document.getElementById('deptCustom').style.display='none';
+}
+
+function renderPreviewList(){
+  const list=document.getElementById('previewList');
+  const search=(document.getElementById('searchFilter').value||'').toLowerCase();
+  const typeF=document.getElementById('typeFilter').value;
+  let filtered=userEvents.filter(e=>
+    (!search||e.evname.toLowerCase().includes(search)||e.dept.toLowerCase().includes(search))&&
+    (!typeF||e.evtype===typeF)
+  ).sort((a,b)=>a.evdate>b.evdate?1:-1);
+  if(!filtered.length){list.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><p>कोणतीही नोंद आढळली नाही.</p></div>';return;}
+  list.innerHTML=filtered.map(e=>`
+    <div class="event-item">
+      <div class="event-dot" style="background:${COLORS[e.evtype]||'#94A3B8'}"></div>
+      <div class="event-info">
+        <div class="ev-title">${e.evname}</div>
+        <div class="ev-meta">📅 ${formatDate(e.evdate)}${e.evdate2?' – '+formatDate(e.evdate2):''} &nbsp;|&nbsp; 🏛️ ${e.dept}</div>
+        <div class="ev-meta">${LABELS[e.evtype]||e.evtype}${e.evplace?' &nbsp;|&nbsp; 📍 '+e.evplace:''}</div>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="deleteUserEvent(${e.id})">🗑️</button>
+    </div>`).join('');
+}
+function filterEvents(){renderPreviewList();}
+function deleteUserEvent(id){
+  if(!confirm('ही नोंद हटवायची आहे का?'))return;
+  userEvents=userEvents.filter(e=>e.id!==id);
+  renderPreviewList();renderAdminTable();
+  deleteEventFromSheets(id);
+  showToast('🗑️ नोंद हटवली.','');
+}
+
+// ===== CALENDAR HOLIDAYS PANEL =====
+function renderCalHolidays(){
+  const monthStr=`${currentYear}-${String(currentMonth+1).padStart(2,'0')}`;
+  const hols=GOVT_HOLIDAYS_AY.filter(h=>h.date.startsWith(monthStr));
+  const container=document.getElementById('calHolGrid');
+  if(!hols.length){
+    container.innerHTML='<div class="cal-hol-empty">या महिन्यात कोणतीही शासकीय सुट्टी नाही.</div>';
+    return;
+  }
+  container.innerHTML=hols.map(h=>{
+    const[y,m,d]=h.date.split('-');
+    const isNat=h.type==='national';
+    const borderColor=isNat?'var(--saffron)':'var(--green)';
+    const badgeBg=isNat?'#FFEDD5':'#F0FDF4';
+    const badgeColor=isNat?'#C2410C':'#15803D';
+    const badgeLabel=isNat?'🇮🇳 राष्ट्रीय':'🌸 राज्य/धार्मिक';
+    return `<div class="holiday-card ${isNat?'national':'regional'}" style="border-left-color:${borderColor};">
+      <div class="hc-date" style="background:${isNat?'var(--saffron)':'var(--green)'};">${d}<br>${MONTHS_MR[parseInt(m)-1].substring(0,3)}<br>${y}</div>
+      <div class="hc-info">
+        <div class="hc-name">${h.name}</div>
+        <div class="hc-day">📅 ${h.day}</div>
+        <span class="cal-hol-badge" style="background:${badgeBg};color:${badgeColor};">${badgeLabel}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== CALENDAR =====
+// Color → light background for label chips
+const CHIP_BG = {
+  holiday:'#FEE2E2', exam:'#EDE9FE', 'univ-exam':'#CFFAFE',
+  cultural:'#FFEDD5', sports:'#DCFCE7', committee:'#FEF9C3',
+  dept:'#DBEAFE', meeting:'#F1F5F9', other:'#F8FAFC'
+};
+const CHIP_COLOR = {
+  holiday:'#991B1B', exam:'#5B21B6', 'univ-exam':'#0E7490',
+  cultural:'#C2410C', sports:'#166534', committee:'#854D0E',
+  dept:'#1D4ED8', meeting:'#374151', other:'#64748B'
+};
+
+function openDayModal(dateStr, dayEvs){
+  const existing = document.getElementById('evModal');
+  if(existing) existing.remove();
+  const [y,m,d] = dateStr.split('-');
+  const title = `📅 ${d}/${m}/${y} — ${dayEvs.length} कार्यक्रम`;
+  const itemsHtml = dayEvs.map(e=>{
+    const bg = CHIP_BG[e.evtype]||'#F8FAFC';
+    const col = CHIP_COLOR[e.evtype]||'#64748B';
+    const dotCol = COLORS[e.evtype]||'#94A3B8';
+    const label = LABELS[e.evtype]||e.evtype;
+    const meta = [
+      e.dept ? `🏛️ ${e.dept}` : '',
+      e.evtime ? `🕐 ${e.evtime}` : '',
+      e.evplace ? `📍 ${e.evplace}` : '',
+      e.evdate2 && e.evdate2!==e.evdate
+        ? (e._rangeTag === 'start'
+            ? `📅 सुरुवात: ${formatDate(e.evdate)} → समाप्ती: ${formatDate(e.evdate2)}`
+            : `📅 सुरुवात: ${formatDate(e.evdate)} → समाप्ती: ${formatDate(e.evdate2)}`)
+        : '',
+      e.evdesc ? `ℹ️ ${e.evdesc}` : ''
+    ].filter(Boolean).join('<br>');
+    const rangeLabel = e._rangeTag === 'start'
+      ? `<span style="background:#D1FAE5;color:#065F46;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-right:5px;">▶ सुरुवात</span>`
+      : e._rangeTag === 'end'
+      ? `<span style="background:#FEE2E2;color:#991B1B;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-right:5px;">⏹ समाप्ती</span>`
+      : '';
+    return `<div class="ev-modal-item">
+      <div class="ev-modal-dot" style="background:${dotCol}"></div>
+      <div class="ev-modal-info">
+        <div class="ev-modal-name">${rangeLabel}${e.evname}</div>
+        <div class="ev-modal-meta">${meta}</div>
+        <span class="ev-modal-badge" style="background:${bg};color:${col};">${label}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  const modal = document.createElement('div');
+  modal.id = 'evModal';
+  modal.className = 'ev-modal-bg';
+  modal.innerHTML = `<div class="ev-modal">
+    <div class="ev-modal-head">
+      <h3>${title}</h3>
+      <button class="close-btn" onclick="document.getElementById('evModal').remove()">✕</button>
+    </div>
+    <div class="ev-modal-body">${itemsHtml}</div>
+  </div>`;
+  modal.addEventListener('click', function(ev){ if(ev.target===modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+function renderCalendar(){
+  document.getElementById('monthLabel').textContent=MONTHS_MR[currentMonth]+' '+currentYear;
+  const grid=document.getElementById('calGrid');
+  const DAY_NAMES=['रवि','सोम','मंगळ','बुध','गुरु','शुक्र','शनि'];
+  grid.innerHTML='';
+  DAY_NAMES.forEach(name=>{const h=document.createElement('div');h.className='cal-header-day';h.textContent=name;grid.appendChild(h);});
+  const firstDay=new Date(currentYear,currentMonth,1).getDay();
+  const daysInMonth=new Date(currentYear,currentMonth+1,0).getDate();
+  const today=new Date();
+  const allEvs=getAllEvents();
+
+  for(let i=0;i<firstDay;i++){
+    const b=document.createElement('div');b.className='cal-day empty';grid.appendChild(b);
+  }
+
+  for(let d=1;d<=daysInMonth;d++){
+    const cell=document.createElement('div');cell.className='cal-day';
+    const dateStr=`${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dow=new Date(dateStr).getDay();
+    if(dow===0) cell.classList.add('sunday');
+    if(today.getFullYear()===currentYear&&today.getMonth()===currentMonth&&today.getDate()===d) cell.classList.add('today');
+
+    // Build display events: for range events show only on start/end date
+    const dayEvs = [];
+    allEvs.forEach(e => {
+      const hasRange = e.evdate2 && e.evdate2 !== e.evdate;
+      if (!hasRange) {
+        // Single-day event: show on its date
+        if (e.evdate === dateStr) dayEvs.push({ ...e, _rangeTag: '' });
+      } else {
+        // Range event: only show on start date and end date
+        if (e.evdate === dateStr) dayEvs.push({ ...e, _rangeTag: 'start' });
+        else if (e.evdate2 === dateStr) dayEvs.push({ ...e, _rangeTag: 'end' });
+        // skip all middle dates
+      }
+    });
+
+    const isHol = dayEvs.some(e=>e.evtype==='holiday');
+    if(isHol) cell.classList.add('is-holiday');
+
+    // Day number
+    const dayNumEl = document.createElement('div');
+    dayNumEl.className = 'day-num';
+    dayNumEl.textContent = d;
+    cell.appendChild(dayNumEl);
+
+    // Dynamic: fit as many labels as possible in fixed cell height
+    // Responsive: adapt to screen size
+    const screenW = window.innerWidth;
+    const CELL_H = screenW < 600 ? 80 : screenW < 900 ? 110 : 130;
+    const DAYNUM_H = 20;
+    const LABEL_H = screenW < 600 ? 15 : screenW < 900 ? 16 : 18;
+    const MORE_H = 14;
+    const availH = CELL_H - DAYNUM_H;
+    let maxFit = Math.floor(availH / LABEL_H);
+    if(dayEvs.length > maxFit) maxFit = Math.max(1, Math.floor((availH - MORE_H) / LABEL_H));
+    const SHOW_MAX = maxFit;
+
+    dayEvs.slice(0, SHOW_MAX).forEach(ev=>{
+      const lbl = document.createElement('span');
+      lbl.className = 'cal-ev-label';
+      lbl.style.background = CHIP_BG[ev.evtype]||'#F8FAFC';
+      lbl.style.color = CHIP_COLOR[ev.evtype]||'#64748B';
+      let prefix = ev._rangeTag === 'start' ? '▶' : ev._rangeTag === 'end' ? '⏹' : '';
+      let suffix = ev._rangeTag === 'start' ? ' सुरुवात' : ev._rangeTag === 'end' ? ' समाप्ती' : '';
+      const maxChars = prefix ? 10 : 14;
+      let baseName = ev.evname.length > maxChars ? ev.evname.substring(0, maxChars-1)+'…' : ev.evname;
+      lbl.textContent = (prefix ? prefix+' ' : '') + baseName + suffix;
+      lbl.title = ev.evname + (ev._rangeTag === 'start' ? ' (सुरुवात → '+formatDate(ev.evdate2)+')' : ev._rangeTag === 'end' ? ' (समाप्ती ← '+formatDate(ev.evdate)+')' : '');
+      if(ev._rangeTag === 'start') lbl.style.borderLeft = '3px solid '+(CHIP_COLOR[ev.evtype]||'#64748B');
+      if(ev._rangeTag === 'end') lbl.style.borderRight = '3px solid '+(CHIP_COLOR[ev.evtype]||'#64748B');
+      cell.appendChild(lbl);
+    });
+
+    // "+N more" chip
+    if(dayEvs.length > SHOW_MAX){
+      const more = document.createElement('span');
+      more.className = 'cal-ev-more';
+      more.textContent = '+'+( dayEvs.length - SHOW_MAX)+' अधिक';
+      more.title = dayEvs.slice(SHOW_MAX).map(e=>e.evname).join(', ');
+      cell.appendChild(more);
+    }
+
+    // Click → modal
+    if(dayEvs.length){
+      cell.style.cursor='pointer';
+      cell.addEventListener('click', ()=>openDayModal(dateStr, dayEvs));
+    }
+    grid.appendChild(cell);
+  }
+  renderCalHolidays();
+}
+function changeMonth(dir){currentMonth+=dir;if(currentMonth>11){currentMonth=0;currentYear++;}if(currentMonth<0){currentMonth=11;currentYear--;}renderCalendar();}
+function goToday(){const n=new Date();currentMonth=n.getMonth();currentYear=n.getFullYear();renderCalendar();}
+
+// ===== ADMIN =====
+function adminLogin(){
+  if(document.getElementById('adminUser').value===getAdminUsername()&&document.getElementById('adminPass').value===getAdminPassword()){
+    document.getElementById('adminLocked').style.display='none';
+    document.getElementById('adminContent').style.display='block';
+    renderStats();renderAdminTable();populateDeptFilter();
+    showToast('🛡️ प्रशासक म्हणून लॉगिन यशस्वी!','success');
+  }else{showToast('❌ चुकीचा Admin ID किंवा संकेतशब्द!','error');}
+}
+function adminLogout(){document.getElementById('adminLocked').style.display='block';document.getElementById('adminContent').style.display='none';document.getElementById('adminPass').value='';document.getElementById('adminUser').value='';}
+
+function renderStats(){
+  const all=getAllEvents(),counts={};
+  all.forEach(e=>{counts[e.evtype]=(counts[e.evtype]||0)+1;});
+  const depts=[...new Set(userEvents.map(e=>e.dept))].length;
+  document.getElementById('statsRow').innerHTML=`
+    <div class="stat-card" style="border-color:#C0392B;"><div class="stat-num">${all.length}</div><div class="stat-label">एकूण नोंदी</div></div>
+    <div class="stat-card" style="border-color:#C0392B;"><div class="stat-num">${counts['holiday']||0}</div><div class="stat-label">सार्व. सुट्ट्या</div></div>
+    <div class="stat-card" style="border-color:#0E7490;"><div class="stat-num">${BAMU_EVENTS.length}</div><div class="stat-label">BAMU कार्यक्रम</div></div>
+    <div class="stat-card" style="border-color:#6C3483;"><div class="stat-num">${(counts['exam']||0)+(counts['univ-exam']||0)}</div><div class="stat-label">परीक्षा</div></div>
+    <div class="stat-card" style="border-color:#FF6B00;"><div class="stat-num">${counts['cultural']||0}</div><div class="stat-label">सांस्कृतिक</div></div>
+    <div class="stat-card" style="border-color:#1A7A4A;"><div class="stat-num">${counts['sports']||0}</div><div class="stat-label">क्रीडा</div></div>
+    <div class="stat-card" style="border-color:#D4A017;"><div class="stat-num">${counts['committee']||0}</div><div class="stat-label">समिती</div></div>
+    <div class="stat-card" style="border-color:#2563EB;"><div class="stat-num">${userEvents.length}</div><div class="stat-label">विभागीय नोंदी</div></div>
+    <div class="stat-card" style="border-color:#374151;"><div class="stat-num">${depts}</div><div class="stat-label">विभाग/समित्या</div></div>
+  `;
+}
+
+function populateDeptFilter(){
+  const sel=document.getElementById('adminDeptFilter');
+  const depts=[...new Set(getAllEvents().map(e=>e.dept))].sort();
+  sel.innerHTML='<option value="">सर्व विभाग</option>'+depts.map(d=>`<option>${d}</option>`).join('');
+}
+
+function renderAdminTable(){
+  if(document.getElementById('adminContent').style.display==='none')return;
+  renderStats();populateDeptFilter();
+  const search=(document.getElementById('adminSearch').value||'').toLowerCase();
+  const typeF=document.getElementById('adminTypeFilter').value;
+  const deptF=document.getElementById('adminDeptFilter').value;
+  let filtered=getAllEvents().filter(e=>
+    (!search||e.evname.toLowerCase().includes(search)||e.dept.toLowerCase().includes(search))&&
+    (!typeF||e.evtype===typeF)&&(!deptF||e.dept===deptF)
+  ).sort((a,b)=>a.evdate>b.evdate?1:-1);
+  const tbody=document.getElementById('adminTableBody');
+  if(!filtered.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:28px;color:#94A3B8;">नोंद आढळली नाही</td></tr>';return;}
+  tbody.innerHTML=filtered.map((e,i)=>`
+    <tr class="${e.evtype==='holiday'?'holiday-row':''}">
+      <td style="font-family:monospace;color:#94A3B8;font-size:0.76rem;">${i+1}</td>
+      <td><strong style="font-size:0.85rem;">${e.dept}</strong>${e.isGovt?'<br><span style="font-size:0.68rem;color:#94A3B8;">📌 शासकीय</span>':''}</td>
+      <td><strong>${e.evname}</strong>${e.evdesc?`<br><span style="font-size:0.72rem;color:#64748B;">${e.evdesc.substring(0,55)}${e.evdesc.length>55?'...':''}</span>`:''}</td>
+      <td><span class="badge" style="background:${COLORS[e.evtype]}22;color:${COLORS[e.evtype]};border:1px solid ${COLORS[e.evtype]}44;">${LABELS[e.evtype]||e.evtype}</span></td>
+      <td style="white-space:nowrap;font-family:monospace;font-size:0.8rem;">${formatDate(e.evdate)}${e.evdate2?'<br><span style="color:#64748B;font-size:0.7rem;">– '+formatDate(e.evdate2)+'</span>':''}</td>
+      <td style="font-size:0.82rem;">${e.evtime||'–'}</td>
+      <td style="font-size:0.82rem;">${e.evplace||'–'}</td>
+      <td style="font-size:0.82rem;">${e.evby||'–'}</td>
+      <td>${(e.isGovt)?'<span style="font-size:0.7rem;color:#94A3B8;">🔒 संरक्षित</span>':`<button class="btn btn-danger btn-sm" onclick="adminDelete(${e.id})">🗑️</button>`}</td>
+    </tr>`).join('');
+}
+
+function adminDelete(id){
+  if(!confirm('ही नोंद कायमची हटवायची आहे?'))return;
+  userEvents=userEvents.filter(e=>e.id!==id);save();renderAdminTable();renderPreviewList();
+  showToast('🗑️ नोंद हटवली.','');
+}
+function clearUserEvents(){
+  if(!confirm('सर्व विभागीय नोंदी हटवायच्या आहेत का?\n(शासकीय सुट्ट्या कायम राहतील)'))return;
+  userEvents=[];save();renderAdminTable();renderPreviewList();
+  showToast('🗑️ विभागीय नोंदी हटवल्या.','');
+}
+
+function adminTab(name,el){
+  document.querySelectorAll('.tab-pill').forEach(b=>b.classList.remove('active'));el.classList.add('active');
+  document.querySelectorAll('.view-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('vp-'+name).classList.add('active');
+  if(name==='monthly')renderMonthlySummary();
+  if(name==='deptwise')renderDeptwiseSummary();
+  if(name==='holview')renderHolSummaryAdmin();
+  if(name==='pwdmgr')renderPasswordManager();
+}
+
+function renderMonthlySummary(){
+  const byMonth={};
+  getAllEvents().forEach(e=>{const m=e.evdate.substring(0,7);if(!byMonth[m])byMonth[m]=[];byMonth[m].push(e);});
+  const keys=Object.keys(byMonth).sort();
+  if(!keys.length){document.getElementById('monthlySummary').innerHTML='<div class="empty-state"><div class="empty-icon">📆</div><p>कोणतीही नोंद नाही</p></div>';return;}
+  document.getElementById('monthlySummary').innerHTML=keys.map(m=>{
+    const[y,mo]=m.split('-');
+    return `<div class="card" style="margin-bottom:14px;">
+      <div class="card-title">${MONTHS_MR[parseInt(mo)-1]} ${y} <span style="font-family:monospace;font-size:0.8rem;margin-left:7px;">(${byMonth[m].length} नोंदी)</span></div>
+      ${byMonth[m].sort((a,b)=>a.evdate>b.evdate?1:-1).map(e=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #F1F5F9;">
+          <div style="width:9px;height:9px;border-radius:50%;background:${COLORS[e.evtype]||'#94A3B8'};flex-shrink:0;"></div>
+          <div style="flex:1;font-size:0.85rem;"><strong>${e.evname}</strong> <span style="color:#64748B;">— ${e.dept}</span></div>
+          <div style="font-size:0.77rem;color:#64748B;white-space:nowrap;">${formatDate(e.evdate)}</div>
+        </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+function renderDeptwiseSummary(){
+  const byDept={};
+  userEvents.forEach(e=>{if(!byDept[e.dept])byDept[e.dept]=[];byDept[e.dept].push(e);});
+  const keys=Object.keys(byDept).sort();
+  if(!keys.length){document.getElementById('deptwiseSummary').innerHTML='<div class="empty-state"><div class="empty-icon">🏛️</div><p>कोणतीही विभागीय नोंद नाही</p></div>';return;}
+  document.getElementById('deptwiseSummary').innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:14px;">`+
+    keys.map(d=>`<div class="card">
+      <div class="card-title" style="font-size:0.95rem;">🏛️ ${d} <span style="font-family:monospace;font-size:0.78rem;margin-left:6px;">(${byDept[d].length})</span></div>
+      ${byDept[d].sort((a,b)=>a.evdate>b.evdate?1:-1).map(e=>`
+        <div style="display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #F1F5F9;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${COLORS[e.evtype]};flex-shrink:0;margin-top:5px;"></div>
+          <div><div style="font-size:0.83rem;font-weight:600;">${e.evname}</div><div style="font-size:0.72rem;color:#64748B;">${formatDate(e.evdate)}</div></div>
+        </div>`).join('')}
+    </div>`).join('')+`</div>`;
+}
+
+function renderHolSummaryAdmin(){
+  const rows=[...GOVT_HOLIDAYS_AY].sort((a,b)=>a.date>b.date?1:-1);
+  document.getElementById('holidaySummaryAdmin').innerHTML=`
+    <p style="font-size:0.82rem;color:#64748B;margin-bottom:14px;">एकूण <strong>${rows.length}</strong> अधिकृत सार्वजनिक सुट्ट्या (शैक्षणिक वर्ष २०२६-२७)</p>
+    <div style="overflow-x:auto;"><table>
+      <thead><tr><th>#</th><th>दिनांक</th><th>दिवस</th><th>सुट्टीचे नाव</th><th>प्रकार</th></tr></thead>
+      <tbody>${rows.map((h,i)=>`
+        <tr class="${h.type==='national'?'holiday-row':''}">
+          <td style="font-family:monospace;color:#94A3B8;">${i+1}</td>
+          <td style="font-family:monospace;font-weight:600;white-space:nowrap;">${formatDate(h.date)}</td>
+          <td style="white-space:nowrap;">${h.day}</td>
+          <td><strong>${h.name}</strong></td>
+          <td><span class="badge" style="background:${h.type==='national'?'#FFEDD5':'#F0FDF4'};color:${h.type==='national'?'#C2410C':'#15803D'};">${h.type==='national'?'🇮🇳 राष्ट्रीय':'🌸 राज्य/धार्मिक'}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+
+  // BAMU Events Summary Table
+  const TYPE_LABELS = {
+    'committee':'🟡 समिती / प्रशासन', 'univ-exam':'🔵 विद्यापीठ परीक्षा',
+    'cultural':'🟠 सांस्कृतिक', 'exam':'🟣 अंतर्गत परीक्षा'
+  };
+  const bamuRows=[...BAMU_EVENTS].sort((a,b)=>a.evdate>b.evdate?1:-1);
+  document.getElementById('bamuEventsSummaryAdmin').innerHTML=`
+    <p style="font-size:0.82rem;color:#64748B;margin-bottom:14px;">
+      एकूण <strong>${bamuRows.length}</strong> BAMU कार्यक्रम — 
+      <a href="https://bamua.digitaluniversity.ac/" target="_blank" style="color:var(--teal);font-size:0.78rem;">bamua.digitaluniversity.ac ↗</a>
+    </p>
+    <div style="overflow-x:auto;"><table>
+      <thead><tr><th>#</th><th>दिनांक (सुरुवात)</th><th>दिनांक (समाप्ती)</th><th>कार्यक्रम</th><th>प्रकार</th><th>तपशील</th></tr></thead>
+      <tbody>${bamuRows.map((e,i)=>`
+        <tr>
+          <td style="font-family:monospace;color:#94A3B8;">${i+1}</td>
+          <td style="font-family:monospace;font-weight:600;white-space:nowrap;">${formatDate(e.evdate)}</td>
+          <td style="font-family:monospace;white-space:nowrap;">${e.evdate2?formatDate(e.evdate2):'—'}</td>
+          <td><strong>${e.evname}</strong></td>
+          <td><span class="badge" style="background:#EFF6FF;color:#1D4ED8;">${TYPE_LABELS[e.evtype]||e.evtype}</span></td>
+          <td style="font-size:0.75rem;color:#64748B;max-width:240px;">${e.evdesc||'—'}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+// ===== EXPORT =====
+function exportCSV(){
+  const all=getAllEvents().sort((a,b)=>a.evdate>b.evdate?1:-1);
+  const headers=['विभाग','कार्यक्रम','प्रकार','दिनांक (सुरुवात)','दिनांक (समाप्ती)','वेळ','स्थळ','नोंदणीकर्ता','तपशील'];
+  const rows=all.map(e=>[e.dept,e.evname,LABELS[e.evtype]||e.evtype,e.evdate,e.evdate2||'',e.evtime||'',e.evplace||'',e.evby||'',e.evdesc||'']);
+  const csv=[headers,...rows].map(r=>r.map(c=>`"${(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  download('\uFEFF'+csv,'gkvm_calendar_2026-27.csv','text/csv');
+}
+
+// ===== EXCEL EXPORT =====
+function exportExcel(type){
+  let data=[], title='';
+  if(type==='all'){ data=getAllEvents(); title='संपूर्ण नोंदी'; }
+  else if(type==='user'){ data=userEvents; title='विभागीय नोंदी'; }
+  else if(type==='holidays'){ data=GOVT_HOLIDAYS_AY.map((h,i)=>({dept:'महाराष्ट्र शासन',evname:h.name,evtype:'holiday',evdate:h.date,evdate2:'',evtime:'',evplace:'',evby:'GAD',evdesc:h.day})); title='सुट्ट्या यादी'; }
+  data=data.sort((a,b)=>a.evdate>b.evdate?1:-1);
+
+  // Build HTML table for Excel
+  const headers=['#','विभाग / समिती','कार्यक्रम','प्रकार','दिनांक (सुरुवात)','दिनांक (समाप्ती)','वेळ','स्थळ','नोंदणीकर्ता','तपशील'];
+  const colWidths=[40,160,200,120,100,100,70,120,120,200];
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel">
+<Styles>
+  <Style ss:ID="h"><Font ss:Bold="1" ss:Size="11" ss:Color="#FFFFFF"/><Interior ss:Color="#0D1B3E" ss:Pattern="Solid"/><Alignment ss:WrapText="1" ss:Horizontal="Center"/></Style>
+  <Style ss:ID="t"><Font ss:Bold="1" ss:Size="13"/><Interior ss:Color="#F4C430" ss:Pattern="Solid"/><Alignment ss:Horizontal="Center"/></Style>
+  <Style ss:ID="d"><Alignment ss:WrapText="1" ss:Vertical="Top"/><Font ss:Size="10"/></Style>
+  <Style ss:ID="alt"><Interior ss:Color="#FFF8EE" ss:Pattern="Solid"/><Alignment ss:WrapText="1" ss:Vertical="Top"/><Font ss:Size="10"/></Style>
+  <Style ss:ID="hol"><Interior ss:Color="#FEE2E2" ss:Pattern="Solid"/><Alignment ss:WrapText="1" ss:Vertical="Top"/><Font ss:Size="10"/></Style>
+</Styles>
+<Worksheet ss:Name="${title}">
+<Table>`;
+  colWidths.forEach(w=>{ xml+=`<Column ss:Width="${w}"/>`; });
+  xml+=`<Row ss:Height="28"><Cell ss:MergeAcross="${headers.length-1}" ss:StyleID="t"><Data ss:Type="String">शासकीय ज्ञान विज्ञान महाविद्यालय – ${title} – शैक्षणिक वर्ष २०२६-२७</Data></Cell></Row>`;
+  xml+=`<Row ss:Height="22">${headers.map(h=>`<Cell ss:StyleID="h"><Data ss:Type="String">${h}</Data></Cell>`).join('')}</Row>`;
+  data.forEach((e,i)=>{
+    const sty = e.evtype==='holiday'?'hol': (i%2===0?'d':'alt');
+    const cols=[i+1, e.dept, e.evname, LABELS[e.evtype]||e.evtype, formatDate(e.evdate), e.evdate2?formatDate(e.evdate2):'', e.evtime||'', e.evplace||'', e.evby||'', e.evdesc||''];
+    xml+=`<Row ss:Height="18">${cols.map((c,ci)=>`<Cell ss:StyleID="${sty}"><Data ss:Type="${ci===0?'Number':'String'}">${ci===0?c:String(c).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</Data></Cell>`).join('')}</Row>`;
+  });
+  xml+=`</Table></Worksheet></Workbook>`;
+  download('\uFEFF'+xml,`gkvm_${type}_2026-27.xls`,'application/vnd.ms-excel;charset=UTF-8');
+  showToast(`✅ Excel फाइल डाउनलोड होत आहे!`,'success');
+}
+
+// ===== ADMIN PRINT REPORT =====
+function adminPrintReport(type){
+  let events=[], heading='';
+  if(type==='all'){ events=getAllEvents(); heading='संपूर्ण कार्यक्रम अहवाल'; }
+  else if(type==='user'){ events=userEvents; heading='विभागीय नोंदी अहवाल'; }
+  else if(type==='holidays'){ events=GOVT_HOLIDAYS_AY.map(h=>({dept:'महाराष्ट्र शासन',evname:h.name,evtype:'holiday',evdate:h.date,evdate2:'',evtime:'',evplace:'',evby:'GAD',evdesc:h.day})); heading='शासकीय सुट्ट्या यादी'; }
+  else if(type==='bamu'){ events=BAMU_EVENTS; heading='BAMU विद्यापीठ कार्यक्रम'; }
+  events=events.sort((a,b)=>a.evdate>b.evdate?1:-1);
+
+  const now = new Date().toLocaleDateString('mr-IN',{year:'numeric',month:'long',day:'numeric'});
+  const rows = events.map((e,i)=>`
+    <tr style="background:${i%2===0?'#fff':'#FAFBFF'};${e.evtype==='holiday'?'background:#FFF5F5;':''}">
+      <td style="padding:7px 10px;text-align:center;color:#94A3B8;font-size:0.78rem;">${i+1}</td>
+      <td style="padding:7px 10px;font-size:0.82rem;font-weight:600;">${e.dept}</td>
+      <td style="padding:7px 10px;font-size:0.82rem;">${e.evname}</td>
+      <td style="padding:7px 10px;font-size:0.78rem;">${LABELS[e.evtype]||e.evtype}</td>
+      <td style="padding:7px 10px;font-size:0.8rem;white-space:nowrap;">${formatDate(e.evdate)}${e.evdate2?' – '+formatDate(e.evdate2):''}</td>
+      <td style="padding:7px 10px;font-size:0.78rem;">${e.evplace||'–'}</td>
+      <td style="padding:7px 10px;font-size:0.78rem;">${e.evby||'–'}</td>
+    </tr>`).join('');
+
+  const html = buildLetterheadHTML({
+    heading,
+    subheading: `शैक्षणिक वर्ष २०२६-२७ | दिनांक: ${now} | एकूण नोंदी: ${events.length}`,
+    sigName: '', sigDesig: '', sigDept: '', sigImg: null,
+    contentHTML: `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;">
+      <thead><tr style="background:#0D1B3E;color:white;">
+        <th style="padding:9px 10px;font-size:0.78rem;">#</th>
+        <th style="padding:9px 10px;font-size:0.78rem;text-align:left;">विभाग / समिती</th>
+        <th style="padding:9px 10px;font-size:0.78rem;text-align:left;">कार्यक्रम</th>
+        <th style="padding:9px 10px;font-size:0.78rem;text-align:left;">प्रकार</th>
+        <th style="padding:9px 10px;font-size:0.78rem;text-align:left;">दिनांक</th>
+        <th style="padding:9px 10px;font-size:0.78rem;text-align:left;">स्थळ</th>
+        <th style="padding:9px 10px;font-size:0.78rem;text-align:left;">नोंदणीकर्ता</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`,
+    isAdmin: true
+  });
+  printViaFrame(html);
+}
+
+// ===== PDF MODAL (Teacher Entry) =====
+function openPdfModal(){
+  // Gather current form values
+  const dept = getDeptValue();
+  const evname = document.getElementById('evname').value.trim();
+  const evdate = document.getElementById('evdate').value;
+  const evdate2 = document.getElementById('evdate2').value;
+  const evtime = document.getElementById('evtime').value;
+  const evplace = document.getElementById('evplace').value.trim();
+  const evdesc = document.getElementById('evdesc').value.trim();
+  const evby = document.getElementById('evby').value.trim();
+  const evtype = document.getElementById('evtype').value;
+
+  if(!dept||!evname||!evdate){ showToast('❌ कृपया आधी माहिती भरा!','error'); return; }
+
+  // Store event data globally for PDF generation
+  window._pdfEvData = {dept,evname,evdate,evdate2,evtime,evplace,evdesc,evby,evtype};
+
+  const existing = document.getElementById('pdfModalBg');
+  if(existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'pdfModalBg';
+  modal.className = 'pdf-modal-bg';
+  modal.innerHTML = `
+    <div class="pdf-modal">
+      <div class="pdf-modal-head">
+        <h3>📄 PDF Letterhead तयार करा</h3>
+        <button onclick="document.getElementById('pdfModalBg').remove()" style="background:rgba(255,255,255,0.15);border:none;color:white;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:1rem;">✕</button>
+      </div>
+      <div class="pdf-modal-body">
+        <div style="background:#F0FDF4;border:1.5px solid #6EE7B7;border-radius:10px;padding:12px 15px;margin-bottom:16px;font-size:0.83rem;color:#166534;">
+          <strong>नोंद:</strong> खालील माहिती भरल्यानंतर "PDF प्रिंट / डाउनलोड" वर क्लिक करा. Browser च्या Print dialog मध्ये <strong>"Save as PDF"</strong> निवडा.
+        </div>
+
+        <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;color:#0D1B3E;margin-bottom:12px;border-bottom:2px solid #F4C430;padding-bottom:8px;">✍️ स्वाक्षरी तपशील भरा</div>
+
+        <div class="sig-section">
+          <div class="sig-box">
+            <label>HoD / समिती प्रमुखाचे नाव *</label>
+            <input type="text" id="sigName" placeholder="प्रा. डॉ. / श्री. / श्रीमती...">
+            <label style="margin-top:10px;">पद / हुद्दा</label>
+            <input type="text" id="sigDesig" placeholder="विभाग प्रमुख / समिती समन्वयक">
+            <label style="margin-top:10px;">विभाग / समिती</label>
+            <input type="text" id="sigDept" value="${dept}" placeholder="${dept}">
+          </div>
+          <div class="sig-box">
+            <label>स्वाक्षरी प्रतिमा अपलोड करा (पर्यायी)</label>
+            <div class="sig-upload-wrap">
+              <label class="sig-upload-btn" for="sigImg">📷 स्वाक्षरी / शिक्का निवडा</label>
+              <input type="file" id="sigImg" accept="image/*" style="display:none;" onchange="previewSig(this)">
+            </div>
+            <img id="sigPreview" class="sig-preview" style="display:none;" alt="स्वाक्षरी">
+            <div style="font-size:0.7rem;color:#94A3B8;margin-top:6px;">PNG/JPG – पारदर्शक पार्श्वभूमी असलेली प्रतिमा उत्तम</div>
+            <label style="margin-top:10px;">महाविद्यालयाचा शिक्का</label>
+            <select id="sigStamp" style="width:100%;padding:7px 10px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:0.82rem;font-family:inherit;outline:none;">
+              <option value="1">✅ शिक्का दाखवा</option>
+              <option value="0">❌ शिक्का नको</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;font-family:'DM Serif Display',serif;font-size:0.95rem;color:#0D1B3E;margin-bottom:10px;border-bottom:2px solid #F4C430;padding-bottom:8px;">📋 पत्र अतिरिक्त माहिती (पर्यायी)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group" style="margin:0;"><label>पत्र क्रमांक</label><input type="text" id="pdfRefNo" placeholder="GKVM/2026-27/001"></div>
+          <div class="form-group" style="margin:0;"><label>प्रत पाठवा (To)</label><input type="text" id="pdfTo" placeholder="प्राचार्य, GKVM..."></div>
+        </div>
+        <div class="form-group" style="margin-top:10px;"><label>अतिरिक्त टीप (पर्यायी)</label><textarea id="pdfNote" rows="2" style="width:100%;padding:8px 12px;border:1.5px solid #D9E0F0;border-radius:10px;font-size:0.85rem;font-family:inherit;resize:vertical;" placeholder="इतर सूचना, विनंती..."></textarea></div>
+
+        <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">
+          <button class="btn btn-pdf" onclick="generatePDF(window._pdfEvData)" style="flex:1;justify-content:center;">🖨️ PDF प्रिंट / डाउनलोड</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('pdfModalBg').remove()" style="justify-content:center;">रद्द</button>
+        </div>
+      </div>
+    </div>`;
+  modal.addEventListener('click', e=>{ if(e.target===modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+function previewSig(input){
+  if(!input.files||!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e=>{ const img=document.getElementById('sigPreview'); img.src=e.target.result; img.style.display='block'; };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function generatePDF(evData){
+  const sigName   = document.getElementById('sigName').value.trim();
+  const sigDesig  = document.getElementById('sigDesig').value.trim();
+  const sigDept   = document.getElementById('sigDept').value.trim();
+  const sigImgEl  = document.getElementById('sigPreview');
+  const sigImg    = (sigImgEl && sigImgEl.style.display!=='none') ? sigImgEl.src : null;
+  const showStamp = document.getElementById('sigStamp').value === '1';
+  const refNo     = document.getElementById('pdfRefNo').value.trim();
+  const to        = document.getElementById('pdfTo').value.trim();
+  const note      = document.getElementById('pdfNote').value.trim();
+
+  const now = new Date().toLocaleDateString('mr-IN',{year:'numeric',month:'long',day:'numeric'});
+
+  const typeLabel = LABELS[evData.evtype] || evData.evtype;
+  const dateStr   = formatDate(evData.evdate) + (evData.evdate2 ? ' ते ' + formatDate(evData.evdate2) : '');
+
+  const contentHTML = `
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;margin-bottom:10px;">
+      <tbody>
+        <tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;width:38%;">विभाग / समिती</td><td style="padding:7px 14px;border:1px solid #E2E8F0;">${evData.dept}</td></tr>
+        <tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;">कार्यक्रमाचे नाव</td><td style="padding:7px 14px;border:1px solid #E2E8F0;font-weight:600;">${evData.evname}</td></tr>
+        <tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;">कार्यक्रमाचा प्रकार</td><td style="padding:7px 14px;border:1px solid #E2E8F0;">${typeLabel}</td></tr>
+        <tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;">दिनांक</td><td style="padding:7px 14px;border:1px solid #E2E8F0;">${dateStr}</td></tr>
+        ${evData.evtime?`<tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;">वेळ</td><td style="padding:7px 14px;border:1px solid #E2E8F0;">${evData.evtime}</td></tr>`:''}
+        ${evData.evplace?`<tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;">स्थळ / ठिकाण</td><td style="padding:7px 14px;border:1px solid #E2E8F0;">${evData.evplace}</td></tr>`:''}
+        ${evData.evby?`<tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;">नोंदणी केलेले नाव</td><td style="padding:7px 14px;border:1px solid #E2E8F0;">${evData.evby}</td></tr>`:''}
+        ${evData.evdesc?`<tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;">तपशील / विवरण</td><td style="padding:7px 14px;border:1px solid #E2E8F0;">${evData.evdesc}</td></tr>`:''}
+        ${note?`<tr><td style="padding:7px 14px;background:#F8FAFC;font-weight:700;border:1px solid #E2E8F0;">अतिरिक्त टीप</td><td style="padding:7px 14px;border:1px solid #E2E8F0;">${note}</td></tr>`:''}
+      </tbody>
+    </table>`;
+
+  const html = buildLetterheadHTML({ heading:'कार्यक्रम नोंदणी पत्र', subheading:'शैक्षणिक वर्ष २०२६-२७', sigName, sigDesig, sigDept, sigImg, showStamp, refNo, to, date: now, contentHTML, isAdmin:false });
+  printViaFrame(html);
+}
+
+function buildLetterheadHTML({ heading, subheading, sigName, sigDesig, sigDept, sigImg, showStamp, refNo, to, date, contentHTML, isAdmin }){
+  const now = date || new Date().toLocaleDateString('mr-IN',{year:'numeric',month:'long',day:'numeric'});
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=DM+Serif+Display&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Tiro Devanagari Hindi',serif;color:#0D1B3E;background:#fff;padding:0;margin:0;}
+  .page{width:210mm;min-height:297mm;margin:0 auto;padding:14mm 18mm 18mm;position:relative;}
+  /* Header letterhead */
+  .lh-header{border-bottom:4px solid #FF6B00;margin-bottom:14px;padding-bottom:12px;display:flex;align-items:flex-start;gap:16px;}
+  .lh-logo{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#F4C430,#FF6B00);display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;}
+  .lh-title{flex:1;}
+  .lh-maha{font-size:0.72rem;color:#64748B;letter-spacing:0.5px;margin-bottom:2px;}
+  .lh-college{font-family:'DM Serif Display',serif;font-size:1.3rem;color:#0D1B3E;line-height:1.2;font-weight:700;}
+  .lh-affil{font-size:0.72rem;color:#64748B;margin-top:4px;}
+  .lh-addr{font-size:0.7rem;color:#94A3B8;margin-top:3px;}
+  .lh-divider{height:3px;background:linear-gradient(90deg,#0D1B3E,#FF6B00,#F4C430);border-radius:3px;margin-bottom:14px;}
+
+  /* Meta row (ref, date, to) */
+  .meta-row{display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+  .meta-row span{color:#374151;}
+  .meta-row strong{color:#0D1B3E;}
+
+  /* Heading */
+  .doc-heading{font-family:'DM Serif Display',serif;font-size:1.15rem;text-align:center;margin:12px 0 6px;color:#0D1B3E;border-bottom:2px solid #F4C430;padding-bottom:7px;}
+  .doc-sub{text-align:center;font-size:0.8rem;color:#64748B;margin-bottom:16px;}
+
+  /* Content */
+  .content-area{margin-bottom:24px;}
+
+  /* Signature */
+  .sig-area{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+  .sig-block{border-top:1.5px solid #CBD5E1;padding-top:10px;}
+  .sig-img{max-height:55px;max-width:140px;object-fit:contain;margin-bottom:6px;display:block;}
+  .sig-name{font-weight:700;font-size:0.9rem;color:#0D1B3E;}
+  .sig-desig{font-size:0.78rem;color:#64748B;margin-top:2px;}
+  .sig-dept{font-size:0.75rem;color:#64748B;}
+
+  /* Stamp placeholder */
+  .stamp-box{width:90px;height:90px;border:2px dashed #CBD5E1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:#94A3B8;text-align:center;margin-top:6px;padding:8px;}
+
+  /* Footer */
+  .lh-footer{position:fixed;bottom:10mm;left:18mm;right:18mm;border-top:1.5px solid #E2E8F0;padding-top:6px;display:flex;justify-content:space-between;font-size:0.65rem;color:#94A3B8;}
+
+  @media print{
+    .page{padding:10mm 14mm 14mm;}
+    .lh-footer{position:fixed;bottom:8mm;}
+    @page{size:A4;margin:0;}
+  }
+</style></head><body>
+<div class="page">
+  <!-- LETTERHEAD HEADER -->
+  <div class="lh-header">
+    <div class="lh-logo">🎓</div>
+    <div class="lh-title">
+      <div class="lh-maha">महाराष्ट्र शासन | उच्च व तंत्रशिक्षण विभाग</div>
+      <div class="lh-college">शासकीय ज्ञान विज्ञान महाविद्यालय</div>
+      <div class="lh-affil">संलग्न: डॉ. बाबासाहेब आंबेडकर मराठवाडा विद्यापीठ (BAMU), छत्रपती संभाजीनगर</div>
+      <div class="lh-addr">📍 छत्रपती संभाजीनगर, महाराष्ट्र</div>
+    </div>
+  </div>
+  <div class="lh-divider"></div>
+
+  ${(refNo||to||now)?`<div class="meta-row">
+    <span>${refNo?`<strong>संदर्भ क्र.:</strong> ${refNo}`:'&nbsp;'}</span>
+    <span>${to?`<strong>प्रति:</strong> ${to}`:'&nbsp;'}</span>
+    <span><strong>दिनांक:</strong> ${now}</span>
+  </div>`:''}
+
+  <div class="doc-heading">${heading}</div>
+  <div class="doc-sub">${subheading}</div>
+
+  <div class="content-area">${contentHTML}</div>
+
+  <!-- SIGNATURE AREA -->
+  <div class="sig-area">
+    <div class="sig-block">
+      ${sigImg?`<img src="${sigImg}" class="sig-img" alt="स्वाक्षरी">`:'<div style="height:45px;"></div>'}
+      <div class="sig-name">${sigName||'_______________________'}</div>
+      <div class="sig-desig">${sigDesig||'HoD / समिती प्रमुख'}</div>
+      <div class="sig-dept">${sigDept||''}</div>
+    </div>
+    <div class="sig-block" style="text-align:right;">
+      ${showStamp!==false?`<div class="stamp-box" style="margin-left:auto;">महाविद्यालयाचा<br>अधिकृत शिक्का</div>`:''}
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="lh-footer">
+    <span>शासकीय ज्ञान विज्ञान महाविद्यालय, छत्रपती संभाजीनगर</span>
+    <span>शैक्षणिक वर्ष २०२६-२७</span>
+    <span>© 2026 Jyoti B. Thorat &amp; Bapu R. Thorat | All Rights Reserved</span>
+  </div>
+</div>
+<script>window.onload=function(){window.print();}<\/script>
+</body></html>`;
+}
+
+function printViaFrame(html){
+  const fr = document.getElementById('printFrame');
+  fr.style.display='block';
+  fr.style.width='1px';fr.style.height='1px';
+  const doc = fr.contentWindow.document;
+  doc.open(); doc.write(html); doc.close();
+  // Frame's own print is triggered by window.onload inside HTML
+  showToast('🖨️ Print dialog उघडत आहे...','success');
+  // Close modal if open
+  const m=document.getElementById('pdfModalBg'); if(m) setTimeout(()=>m.remove(),800);
+}
+function exportJSON(){download(JSON.stringify(userEvents,null,2),'gkvm_backup.json','application/json');}
+function importJSON(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{try{const d=JSON.parse(e.target.result);if(Array.isArray(d)){userEvents=d;save();renderAdminTable();renderPreviewList();showToast(`✅ ${d.length} नोंदी आयात केल्या!`,'success');}}catch{showToast('❌ फाइल वाचण्यात त्रुटी!','error');}};
+  reader.readAsText(file);
+}
+function download(content,filename,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=filename;a.click();}
+
+function formatDate(d){if(!d)return'';const[y,m,day]=d.split('-');return`${day}/${m}/${y}`;}
+function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>t.classList.remove('show'),3200);}
+
+// ===== LEGAL MODALS =====
+const LEGAL_CONTENT = {
+  ownership: {
+    icon: '👤', title: 'Ownership & Credits',
+    html: `
+      <div class="lm-section">
+        <div class="lm-label">© बौद्धिक संपदा स्वामित्व | Intellectual Property Ownership</div>
+        <div class="lm-name">Jyoti B. Thorat</div>
+        <div class="lm-role">सह-निर्माता व बौद्धिक संपदा सह-मालक<br>Co-Creator &amp; Co-Owner, Intellectual Property</div>
+        <div class="lm-name" style="margin-top:12px;">Bapu R. Thorat</div>
+        <div class="lm-role">सह-निर्माता व बौद्धिक संपदा सह-मालक<br>Co-Creator &amp; Co-Owner, Intellectual Property</div>
+      </div>
+      <hr class="lm-divider">
+      <div class="lm-section">
+        <div class="lm-label">Software Product</div>
+        <div style="font-size:0.85rem;color:#374151;line-height:1.7;">
+          <strong>GKVM Academic Calendar System</strong><br>
+          शासकीय ज्ञान विज्ञान महाविद्यालय, छत्रपती संभाजीनगर<br>
+          शैक्षणिक वर्ष २०२६–२७<br><br>
+          हे सॉफ्टवेअर, त्याची रचना, स्रोत कोड (source code), डेटाबेस संरचना आणि वापरकर्ता इंटरफेस — <strong>Jyoti B. Thorat</strong> आणि <strong>Bapu R. Thorat</strong> यांच्या बौद्धिक संपदेचा भाग आहे.
+        </div>
+      </div>
+      <hr class="lm-divider">
+      <div style="font-size:0.76rem;color:#64748B;text-align:center;">
+        <span style="font-family:'JetBrains Mono',monospace;color:#FF6B00;font-weight:700;">© 2026</span> Jyoti B. Thorat &amp; Bapu R. Thorat. All Rights Reserved.
+      </div>`
+  },
+  legal: {
+    icon: '⚖️', title: 'Legal Notice',
+    html: `
+      <div class="lm-warning" style="margin-bottom:16px;">
+        ⚠️ <strong>कायदेशीर सूचना – Legal Notice</strong><br><br>
+        हे संपूर्ण सॉफ्टवेअर उत्पादन — त्याचा स्रोत कोड, अभिकल्प (design), डेटाबेस संरचना, आणि वापरकर्ता इंटरफेस — <strong>Jyoti B. Thorat</strong> आणि <strong>Bapu R. Thorat</strong> यांच्या बौद्धिक संपदेचा भाग आहे व भारतीय कायद्यांतर्गत संरक्षित आहे.
+      </div>
+      <div class="lm-section">
+        <div class="lm-label">English Legal Statement</div>
+        <div style="font-size:0.8rem;color:#374151;line-height:1.75;background:#F8FAFC;border-radius:10px;padding:13px 15px;border:1px solid #E2E8F0;">
+          Unauthorized reproduction, modification, distribution, or commercial use of this software — in whole or in part — without prior written consent of the copyright holders (<strong>Jyoti B. Thorat &amp; Bapu R. Thorat</strong>) is strictly prohibited and shall attract civil and criminal liability under applicable Indian law.
+        </div>
+      </div>`
+  },
+  acts: {
+    icon: '📜', title: 'Applicable Laws',
+    html: `
+      <div class="lm-section">
+        <div class="lm-label">खालील कायद्यांतर्गत हे सॉफ्टवेअर संरक्षित आहे</div>
+        <div class="lm-act-row">
+          <span class="lm-act">Copyright Act, 1957 (India)</span>
+          <span class="lm-act">IT Act, 2000</span>
+          <span class="lm-act">IPC § 63</span>
+          <span class="lm-act">IPC § 63B</span>
+          <span class="lm-act">TRIPS Agreement</span>
+          <span class="lm-act">Berne Convention</span>
+        </div>
+      </div>
+      <hr class="lm-divider">
+      <div class="lm-section">
+        <div class="lm-label">कायद्यांची थोडक्यात माहिती</div>
+        <ul class="lm-list">
+          <li><strong>Copyright Act, 1957:</strong> सॉफ्टवेअर, कोड, डिझाइन यांचे स्वामित्व संरक्षण</li>
+          <li><strong>IT Act, 2000:</strong> डिजिटल माध्यमातून अनधिकृत वापर प्रतिबंध</li>
+          <li><strong>IPC § 63, 63B:</strong> कॉपीराइट उल्लंघनावर फौजदारी कारवाई</li>
+          <li><strong>TRIPS / Berne Convention:</strong> आंतरराष्ट्रीय बौद्धिक संपदा संरक्षण</li>
+        </ul>
+      </div>`
+  },
+  prohibited: {
+    icon: '🚫', title: 'Prohibited Activities',
+    html: `
+      <div class="lm-warning" style="margin-bottom:16px;">
+        🚫 <strong>खालील कृती कायद्याने दंडनीय आहेत</strong>
+      </div>
+      <div class="lm-section">
+        <ul class="lm-list">
+          <li>लेखी परवानगीशिवाय प्रतिलिपी (Copy) करणे, वितरण करणे किंवा विक्री करणे</li>
+          <li>कोड किंवा डिझाइन बदलून (Modify) वापरणे</li>
+          <li>व्यावसायिक (Commercial) किंवा संस्थात्मक वापर — लेखी परवानगीशिवाय</li>
+          <li>मूळ निर्मात्यांचे (Jyoti B. Thorat &amp; Bapu R. Thorat) नाव काढून स्वतःच्या नावाने प्रकाशित करणे</li>
+          <li>इतर संस्था, महाविद्यालये किंवा व्यक्तींसाठी हे सॉफ्टवेअर deploy करणे</li>
+          <li>Reverse engineering, decompilation किंवा disassembly</li>
+        </ul>
+      </div>
+      <hr class="lm-divider">
+      <div style="font-size:0.78rem;color:#64748B;text-align:center;">
+        उल्लंघनावर <strong style="color:#C0392B;">दिवाणी व फौजदारी</strong> दोन्ही कारवाई होऊ शकते.
+      </div>`
+  },
+  contact: {
+    icon: '📩', title: 'Legal Contact',
+    html: `
+      <div class="lm-section">
+        <div class="lm-label">कायदेशीर कारवाई / परवानगीसाठी संपर्क करा</div>
+        <div style="background:#F0FDF4;border:1.5px solid #6EE7B7;border-radius:10px;padding:15px 18px;font-size:0.85rem;color:#166534;line-height:1.9;">
+          <strong style="font-size:1rem;color:#0D1B3E;">Jyoti B. Thorat</strong><br>
+          सह-निर्माता व बौद्धिक संपदा सह-मालक<br>
+          छत्रपती संभाजीनगर, महाराष्ट्र, भारत
+          <br><br>
+          <strong style="font-size:1rem;color:#0D1B3E;">Bapu R. Thorat</strong><br>
+          सह-निर्माता व बौद्धिक संपदा सह-मालक<br>
+          छत्रपती संभाजीनगर, महाराष्ट्र, भारत
+        </div>
+      </div>
+      <hr class="lm-divider">
+      <div style="font-size:0.78rem;color:#64748B;text-align:center;line-height:1.7;">
+        परवानगीसाठी किंवा कायदेशीर प्रश्नांसाठी वरील संपर्क माहितीद्वारे संपर्क साधा.<br>
+        <em>For licensing, permissions, or legal inquiries, contact the copyright holders directly.</em>
+      </div>`
+  }
+};
+
+function openLegalModal(type){
+  const existing = document.getElementById('legalModalBg');
+  if(existing) existing.remove();
+  const c = LEGAL_CONTENT[type];
+  if(!c) return;
+  const modal = document.createElement('div');
+  modal.id = 'legalModalBg';
+  modal.className = 'legal-modal-bg';
+  modal.innerHTML = `
+    <div class="legal-modal">
+      <div class="legal-modal-head">
+        <h3>${c.icon} ${c.title}</h3>
+        <button onclick="document.getElementById('legalModalBg').remove()" style="background:rgba(255,255,255,0.15);border:none;color:white;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:1rem;line-height:1;">✕</button>
+      </div>
+      <div class="legal-modal-body">${c.html}</div>
+    </div>`;
+  modal.addEventListener('click', e=>{ if(e.target===modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+window.addEventListener('DOMContentLoaded', async ()=>{
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ ['legalModalBg','pdfModalBg','evModal'].forEach(id=>{ const m=document.getElementById(id); if(m) m.remove(); }); }});
+  document.getElementById('evdate').value=new Date().toISOString().split('T')[0];
+  setTimeout(renderCalendar, 50);
+  // Google Sheets मधून data लोड करा
+  if(SCRIPT_URL.includes('YOUR_DEPLOYMENT_ID_HERE')){
+    showToast('⚠️ SCRIPT_URL अद्याप set केला नाही! Setup पूर्ण करा.','error');
+    renderPreviewList();
+    return;
+  }
+  await loadPasswordsFromSheets();
+  await loadEventsFromSheets();
+});
+
+window.addEventListener('resize', ()=>{
+  const calSec = document.getElementById('sec-calendar');
+  if(calSec && calSec.classList.contains('active')) renderCalendar();
+});
+</script>
+</body>
+</html>
