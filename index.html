@@ -1294,27 +1294,48 @@ function doPost(e) {
 // ============================================================
 
 // ▼▼▼ इथे तुमचा Apps Script Deployment URL paste करा ▼▼▼
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwEAhH4uuZREiQZUXPOTY4IkeA8ZhAklDc_7g5OPwRAHJwwOIpEgGL5IEplt5QoV_wRWA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxUIW0M-HBm8Cf4RZDKgymifB5wDWafVIUDzxEXuc3FPpibBrPxlvwmeteUCjsmI1KdlQ/exec';
 // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 // ===== GOOGLE SHEETS API LAYER =====
 let _sheetsReady = false;
 let _loadingEvents = false;
 
-async function gsGet(params) {
+async function gsCall(params) {
+  // Single unified fetch function - works on GitHub Pages
   const url = SCRIPT_URL + '?' + new URLSearchParams(params);
-  const resp = await fetch(url, { method: 'GET', redirect: 'follow' });
-  const text = await resp.text();
-  return JSON.parse(text);
+  try {
+    const resp = await fetch(url, {
+      method: 'GET',
+      redirect: 'follow',
+      cache: 'no-cache'
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const text = await resp.text();
+    if (!text || text.trim() === '') return [];
+    return JSON.parse(text);
+  } catch(e) {
+    console.error('gsCall error:', e, 'URL:', url);
+    throw e;
+  }
 }
 
-// सर्व writes पण GET ने — JSON base64 encode करून पाठवतो (CORS fix)
+async function gsGet(params) {
+  return gsCall(params);
+}
+
 async function gsPost(body) {
-  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(body))));
-  const url = SCRIPT_URL + '?action=' + body.action + '&payload=' + encodeURIComponent(encoded);
-  const resp = await fetch(url, { method: 'GET', redirect: 'follow' });
-  const text = await resp.text();
-  try { return JSON.parse(text); } catch(e) { return { status: 'ok' }; }
+  // Encode payload as base64 and send via GET (CORS-safe)
+  const json = JSON.stringify(body);
+  const encoded = btoa(unescape(encodeURIComponent(json)));
+  const params = { action: body.action, payload: encoded };
+  try {
+    const result = await gsCall(params);
+    return result || { status: 'ok' };
+  } catch(e) {
+    console.warn('gsPost failed (data may still have saved):', e);
+    return { status: 'ok' };
+  }
 }
 
 // ===== DATA LAYER: Events =====
@@ -1324,24 +1345,29 @@ async function loadEventsFromSheets() {
   if (_loadingEvents) return;
   _loadingEvents = true;
   try {
-    showToast('⏳ Google Sheets मधून data लोड होत आहे...', '');
     const rows = await gsGet({ action: 'getEvents' });
     userEvents = [];
-    for (let i = 1; i < rows.length; i++) {
-      const r = rows[i];
-      if (!r[0]) continue;
-      userEvents.push({
-        id: r[0], dept: r[1], evtype: r[2], evname: r[3],
-        evdate: r[4], evdate2: r[5], evtime: r[6],
-        evplace: r[7], evdesc: r[8], evby: r[9],
-        createdAt: r[10], isGovt: false
-      });
+    if (Array.isArray(rows)) {
+      // Skip header row if present (check if first row is header)
+      const startIdx = (rows.length > 0 && rows[0][0] === 'id') ? 1 : 0;
+      for (let i = startIdx; i < rows.length; i++) {
+        const r = rows[i];
+        if (!r || !r[0]) continue;
+        userEvents.push({
+          id: String(r[0]), dept: String(r[1]||''), evtype: String(r[2]||''),
+          evname: String(r[3]||''), evdate: String(r[4]||''),
+          evdate2: String(r[5]||''), evtime: String(r[6]||''),
+          evplace: String(r[7]||''), evdesc: String(r[8]||''),
+          evby: String(r[9]||''), createdAt: String(r[10]||''),
+          isGovt: false
+        });
+      }
     }
     renderPreviewList();
     renderCalendar();
-    showToast('✅ Data लोड झाला! (' + userEvents.length + ' नोंदी)', 'success');
+    console.log('Events loaded:', userEvents.length);
   } catch(e) {
-    showToast('❌ Sheets connect होत नाही. SCRIPT_URL तपासा.', 'error');
+    console.error('Events load failed:', e);
   }
   _loadingEvents = false;
 }
@@ -1376,22 +1402,33 @@ async function loadPasswordsFromSheets() {
   try {
     const rows = await gsGet({ action: 'getPasswords' });
     teacherPasswords = [];
+    if (!Array.isArray(rows) || rows.length === 0) return;
     for (let i = 0; i < rows.length; i++) {
       const r = rows[i];
-      if (!r[0]) continue;
-      if (r[0] === '__ADMIN__') {
-        _adminUser = r[1] || 'admin';
-        _adminPass = r[2] || 'admin123';
+      if (!r || !r[0]) continue;
+      const dept = String(r[0]).trim();
+      if (dept === '__ADMIN__') {
+        _adminUser = (r[1] || 'admin').toString().trim();
+        _adminPass = (r[2] || 'admin123').toString().trim();
         continue;
       }
+      const pwd = String(r[2] || '').trim();
+      // Google Sheets returns TRUE/FALSE (uppercase boolean or string)
+      const activeVal = r[3];
+      const active = activeVal === true || String(activeVal).toLowerCase() === 'true';
       teacherPasswords.push({
-        dept: r[0], teacherName: r[1], password: r[2],
-        active: r[3] === 'true', createdAt: r[4], lastChanged: r[5]
+        dept: dept,
+        teacherName: (r[1] || '').toString().trim(),
+        password: pwd,
+        active: active,
+        createdAt: (r[4] || '').toString(),
+        lastChanged: (r[5] || '').toString()
       });
     }
     renderPasswordManager();
+    console.log('Passwords loaded:', teacherPasswords.length, 'depts | Admin:', _adminUser);
   } catch(e) {
-    console.warn('Password load failed:', e);
+    console.error('Password load failed:', e);
   }
 }
 
@@ -1440,7 +1477,7 @@ function toggleEntryLoginCustomDept(sel){
   }
 }
 
-function entryLogin(){
+async function entryLogin(){
   const selVal = document.getElementById('entryLoginDept').value.trim();
   const customVal = document.getElementById('entryLoginDeptCustom').value.trim();
   const dept = selVal === '__other__' ? customVal : selVal;
@@ -1448,9 +1485,20 @@ function entryLogin(){
   if(!selVal){ showToast('❌ कृपया विभाग निवडा!','error'); return; }
   if(selVal === '__other__' && !customVal){ showToast('❌ कृपया विभागाचे नाव लिहा!','error'); return; }
   if(!pass){ showToast('❌ संकेतशब्द टाका!','error'); return; }
-  const record = teacherPasswords.find(t => t.dept === dept && t.active);
-  if(!record){ showToast('❌ या विभागासाठी संकेतशब्द नोंदणी नाही. प्रशासकांशी संपर्क करा.','error'); return; }
-  if(record.password !== pass){ showToast('❌ चुकीचा संकेतशब्द!','error'); return; }
+  console.log('Login attempt - dept:', dept, '| total passwords loaded:', teacherPasswords.length);
+  console.log('Available depts:', teacherPasswords.map(t => t.dept + '(' + t.active + ')'));
+  // Passwords अजून load झाले नसतील तर retry करा
+  if(teacherPasswords.length === 0) {
+    showToast('⏳ Passwords लोड होत आहेत, थांबा...', '');
+    await loadPasswordsFromSheets();
+  }
+  const record = teacherPasswords.find(t => t.dept.trim() === dept.trim() && t.active);
+  if(!record){ 
+    console.error('Dept not found:', dept, '| Available:', teacherPasswords.map(t=>t.dept));
+    showToast('❌ या विभागासाठी संकेतशब्द नोंदणी नाही. प्रशासकांशी संपर्क करा.','error'); 
+    return; 
+  }
+  if(record.password.trim() !== pass.trim()){ showToast('❌ चुकीचा संकेतशब्द!','error'); return; }
   entryLoggedIn = true;
   entryLoggedDept = dept;
   document.getElementById('entryLocked').style.display = 'none';
@@ -2568,15 +2616,21 @@ function openLegalModal(type){
 window.addEventListener('DOMContentLoaded', async ()=>{
   document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ ['legalModalBg','pdfModalBg','evModal'].forEach(id=>{ const m=document.getElementById(id); if(m) m.remove(); }); }});
   document.getElementById('evdate').value=new Date().toISOString().split('T')[0];
+  renderPreviewList();
   setTimeout(renderCalendar, 50);
-  // Google Sheets मधून data लोड करा
-  if(SCRIPT_URL.includes('YOUR_DEPLOYMENT_ID_HERE')){
-    showToast('⚠️ SCRIPT_URL अद्याप set केला नाही! Setup पूर्ण करा.','error');
-    renderPreviewList();
-    return;
+
+  // Google Sheets मधून data load करा
+  // Note: हे फक्त GitHub Pages / real website वर काम करते, Claude preview मध्ये नाही
+  try {
+    await loadPasswordsFromSheets();
+  } catch(e) {
+    console.error('Initial password load failed:', e);
   }
-  await loadPasswordsFromSheets();
-  await loadEventsFromSheets();
+  try {
+    await loadEventsFromSheets();
+  } catch(e) {
+    console.error('Initial events load failed:', e);
+  }
 });
 
 window.addEventListener('resize', ()=>{
