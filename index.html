@@ -1294,7 +1294,7 @@ function doPost(e) {
 // ============================================================
 
 // ▼▼▼ इथे तुमचा Apps Script Deployment URL paste करा ▼▼▼
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykBoY1d7gWqzDDKnJ_YbFEvULIQ5xJmGNzw7wVaq7T8FYdhLVQQy5cr6jVmHlrZkGbqw/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwEAhH4uuZREiQZUXPOTY4IkeA8ZhAklDc_7g5OPwRAHJwwOIpEgGL5IEplt5QoV_wRWA/exec';
 // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 // ===== GOOGLE SHEETS API LAYER =====
@@ -1303,24 +1303,18 @@ let _loadingEvents = false;
 
 async function gsGet(params) {
   const url = SCRIPT_URL + '?' + new URLSearchParams(params);
-  const resp = await fetch(url, {
-    method: 'GET',
-    redirect: 'follow'
-  });
+  const resp = await fetch(url, { method: 'GET', redirect: 'follow' });
   const text = await resp.text();
   return JSON.parse(text);
 }
 
+// सर्व writes पण GET ने — JSON base64 encode करून पाठवतो (CORS fix)
 async function gsPost(body) {
-  // no-cors mode used to avoid CORS preflight issues with Apps Script
-  await fetch(SCRIPT_URL, {
-    method: 'POST',
-    redirect: 'follow',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(body)
-  });
-  return { status: 'ok' };
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(body))));
+  const url = SCRIPT_URL + '?action=' + body.action + '&payload=' + encodeURIComponent(encoded);
+  const resp = await fetch(url, { method: 'GET', redirect: 'follow' });
+  const text = await resp.text();
+  try { return JSON.parse(text); } catch(e) { return { status: 'ok' }; }
 }
 
 // ===== DATA LAYER: Events =====
